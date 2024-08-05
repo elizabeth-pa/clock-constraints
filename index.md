@@ -12,3 +12,19 @@ This project aims to...
 
 To install, clone this repository and...
 
+---
+
+```
+@misc{sfs,
+  author       = {sdv},
+  title        = {sdf},
+  month        = August,
+  year         = 2024,
+  publisher    = {sdfs},
+  version      = {gdr},
+  doi          = {gdfg},
+  howpublished = {\url{dfgvd}}
+}
+```
+
+# Acknowledgements
