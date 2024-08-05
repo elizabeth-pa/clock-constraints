@@ -1,14 +1,29 @@
 # Welcome to Clock Constraints
 
-This project aims to...
+This project is designed to generate simulated data based on the characteristics of your atomic clocks and use Markov Chain Monte Carlo (MCMC) methods to estimate unknown parameters of various physics models. The results are then used to establish constraints on the proposed theories.
 
-## Features
+## Project Goals
+- Take atomic clock characteristics e.g. as stability and deadtime as input.
+- Generate simulated data for atomic clocks.
+- Inject signals and perform MCMC analysis.
+- Estimate unknown parameters and derive constraints for the theories described below.
 
-- Feature 1
-- Feature 2
-- Feature 3
+# How It Works
 
-## Installation
+## Data Generation
+We generate simulated data for atomic clocks based on input characteristics such as stability and deadtime.
+
+## Signal Injection
+Once the data is generated, we inject the desired signal based on the theory model at hand.
+
+## MCMC Analysis
+Using the injected data, we apply Markov Chain Monte Carlo (MCMC) methods to estimate unknown parameters of various physics models. MCMC generates a posterior distribution of the unknown parameters.
+
+## Theory Constraints
+The estimated parameters are then used to derive constraints for the proposed physics theories. 
+
+
+# Installation
 
 To install, clone this repository and...
 
