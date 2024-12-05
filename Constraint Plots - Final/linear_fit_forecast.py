@@ -56,3 +56,4 @@ def Fisher(h0a=constants.h0a,hm1a=constants.hm1a,Ka=constants.Ka,
 
 print(1/np.sqrt(Fisher()))
 #print(np.sqrt(np.var(DE_chain(pars=np.array([1e-33])))))
+print("hello")
