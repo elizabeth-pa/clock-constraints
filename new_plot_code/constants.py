@@ -1,15 +1,20 @@
 import numpy as np
 
-Ts=3600*24*365
-rhoDE = (2.4e-3)**4 # energy density of Dark Energy in units of eV^4
-rhoDM= 2.6e-6 # energy density of Dark Matter in units of eV^4
-hbar = 4.135667696e-15 /(2 * np.pi)
-Mpl = 1.22e28/np.sqrt(8 * np.pi) # Planck mass in eV
-Msun=1.12e66
-AUev=7.59e17
-Mearth=Msun*(5.972/1988000)
+hbar = 4.135667696e-15 /(2 * np.pi) # eV s
+c = 3e10    # cm / s
+Mpl = 1.22e28 / np.sqrt(8 * np.pi) # Planck mass in eV
 gToeV = 1e9 / (1.8e-24)
-eps=0.0167
+
+rhoDE = (2.4e-3)**4 # energy density of Dark Energy in units of eV^4
+rhoDM = 2.6e-6 # energy density of Dark Matter in units of eV^4
+
+# BE: I recommend converting Ts to natural units
+# here, so as to minimize unit conversions in other parts of the code
+Ts = 3600*24*365
+Msun = 2e33 * gToeV
+AUev = 7.59e17
+Mearth = Msun * (5.972/1988000)
+eps = 0.0167    # Earth's orbit eccentricity
 
 ##### Microscope #####
 
