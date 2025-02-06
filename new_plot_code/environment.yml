@@ -1,0 +1,18 @@
+# Run the following commands to ensure all necessary packages are properly installed
+# curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+# ./bin/micromamba shell init -s bash -r ~/micromamba  # this writes to your .bashrc file 
+# source ~/.bashrc
+# micromamba create -f environment.yml
+# micromamba activate clocks 
+
+name: clocks  # Replace with your desired environment name
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12 
+  - numpy
+  - pandas
+  - matplotlib
+  - jupyterlab
+  - scipy
+  - emcee
