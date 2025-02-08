@@ -39,6 +39,7 @@ This generates the folder venv/ for the virtual environment.  The virtual enviro
 ```
 > source venv/bin/activate
 ```
+and this will make python use the virtual environment.
 
 # Usage
 
