@@ -66,6 +66,6 @@ other common useful tasks.  To generate the plots, run the command
 
 For more information or to collaborate, please contact:
 
-- **Email**: [your.email@example.com](mailto:your.email@example.com)
+[comment]: # (- **Email**: [your.email@example.com](mailto:your.email@example.com))
 - **GitHub**: [elizabeth-pa](https://github.com/elizabeth-pa)
 - **GitHub**: [bencelder](https://github.com/bencelder)
