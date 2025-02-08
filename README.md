@@ -31,14 +31,18 @@ To this end, a requirements.txt file is included which lists the
 various packages and versions.
 
 For example, from the top of the directory do:
+```
 > python -m virtualenv venv
 > python -m pip install -r requirements.txt
+```
 
 # Usage
 
 A makefile is included to facilitate generating plots, as well as a few
 other common useful tasks.  To generate the plots, run the command
+```
 > make plots
+```
 
 ---
 
