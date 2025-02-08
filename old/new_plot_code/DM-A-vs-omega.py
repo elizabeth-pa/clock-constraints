@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import DM_plotter
 
 pi = np.pi
 
@@ -28,7 +29,10 @@ def A_constraint(omega):
 
 
 xs = np.logspace(np.log10(omega_min), np.log10(omega_max))
-ys = A_constraint(xs)
+#ys = A_constraint(xs)
+
+couples = np.genfromtxt("sigmas.csv", delimiter=",", dtype=float)[:,2]
+ys=DM_plotter.A_thr(xs,2,sigmas=couples) # that's how to replace the curve The number 2 corresponds to the couple CaF/Sr
 
 def add_edges(xs, ys, val = 1):
     """ Add points so that when plotted there is an
@@ -43,7 +47,7 @@ def add_edges(xs, ys, val = 1):
 
 ### Plot setup ###
 plt.figure(figsize=(6, 6))
-middle = np.pow(10, (np.log10(omega_max) + np.log10(omega_min))/2)
+middle = np.power(10, (np.log10(omega_max) + np.log10(omega_min))/2)
 
 ## Main results
 xs, ys = add_edges(xs, ys)
@@ -61,10 +65,12 @@ fmax = 8.3e-4
 omega_min = 2 * pi * fmin
 omega_max = 2 * pi * fmax
 
-A = 2.1e-15
+sigma_r = 1.6e-13 # which comes from 2302.04565, below equation (15)
+h0_r = 2 * sigma_r**2 # the correct convertion to frequency domain white noise
+sigma_A_over_om = np.sqrt(2*h0_r/T_max) # the Fisher forecast error for white noise over a total observation time T_max
 
 xs_sherrill = np.logspace(np.log10(omega_min), np.log10(omega_max))
-ys_sherrill = [A * omega for omega in xs_sherrill]
+ys_sherrill = [sigma_A_over_om * omega for omega in xs_sherrill]    
 
 xs_sherrill, ys_sherrill = add_edges(xs_sherrill, ys_sherrill)
 
