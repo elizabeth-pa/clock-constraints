@@ -35,6 +35,10 @@ For example, from the top of the directory do:
 > python -m virtualenv venv
 > python -m pip install -r requirements.txt
 ```
+This generates the folder venv/ for the virtual environment.  The virtual environment can then be used in the usual way: before running any of the other code, enter
+```
+> source venv/bin/activate
+```
 
 # Usage
 
