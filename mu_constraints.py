@@ -1,5 +1,16 @@
 """
 mu_constraints.py
+
+Implements three main functions to be exported as a module:
+    Function name       Signal in mu = m_p / m_e
+
+    DE_max_amplitude    Linear drift
+    DM_max_amplitude    Oscillating on arbitrary frequency w
+    MG_max_amplitude    Oscillating on a 1-year period
+
+Each of these takes in a clock pair and returns a maximum signal that
+is detectable by that clock pair.
+
 """
 
 def DE_max_amplitude(clock_pair = "CaF/Sr"):
