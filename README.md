@@ -75,6 +75,6 @@ The plot-generation scripts can also be run individually, if desired, e.g.
 
 For more information or to collaborate, please contact:
 
-[comment]: # (- **Email**: [your.email@example.com](mailto:your.email@example.com))
+- **Email**: [your.email@example.com](mailto:your.email@example.com)
 - **GitHub**: [elizabeth-pa](https://github.com/elizabeth-pa)
 - **GitHub**: [bencelder](https://github.com/bencelder)
