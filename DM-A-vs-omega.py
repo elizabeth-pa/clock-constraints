@@ -87,5 +87,5 @@ plt.text(middle, ymax * 0.3, "Dark Matter Signal", ha = "center",
          fontsize = 12, bbox = props)
 
 plt.tick_params(which="both", direction="in")
-plt.savefig("DM_A_vs_omega.png", dpi = 300)
-plt.show()
+plt.savefig("plots/DM-A-vs-omega.png", dpi = 300)
+#plt.show()

@@ -3,7 +3,7 @@ import utils
 
 import numpy as np
 from scipy.fft import fft, fftfreq
-from scipy.integrate import simps
+from scipy.integrate import simpson as simps
 
 import matplotlib.pyplot as plt
 import corner

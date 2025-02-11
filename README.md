@@ -26,8 +26,33 @@ The estimated parameters are then used to derive constraints for the proposed ph
 
 # Installation
 
-To install, clone this repository and...
+To install, clone this repository.  It is recommended to also set up
+a python virtual environment to ensure package compatibility.
+To this end, a requirements.txt file is included which lists the
+various packages and versions.
 
+For example, from the top of the directory do:
+```
+> python -m virtualenv venv
+> python -m pip install -r requirements.txt
+```
+This generates the folder venv/ for the virtual environment.  The virtual environment can then be used in the usual way: before running any of the other code, enter
+```
+> source venv/bin/activate
+```
+and this will make python use the virtual environment.
+
+# Usage
+
+A makefile is included to facilitate generating plots, as well as a few
+other common useful tasks.  To generate the plots, run the command
+```
+> make plots
+```
+The plot-generation scripts can also be run individually, if desired, e.g.
+```
+> python DM-A-vs-omega.py
+```
 
 ---
 

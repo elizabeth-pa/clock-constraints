@@ -67,10 +67,34 @@ def Microscope_limits():
 
     return Mmicr_lim, Mmicr_lim2
 
+
+''' Sherrill '''
+
+
+def Sherrill_curve():
+
+    sigma_r = 1.6e-13 # which comes from 2302.04565, below equation (15)
+    h0_r = 2 * sigma_r**2 # the correct convertion to frequency domain white noise
+    sigma_A_over_om = np.sqrt(2*h0_r/(3.01*constants.Ts)) # the Fisher forecast error for white noise over a total observation time T_max
+
+    mminS=constants.hbar/(80000)
+    mmaxS=constants.hbar/(600)
+
+    mplot_range=np.logspace(np.log10(mminS),np.log10(mmaxS))
+
+    xvals = mplot_range
+    yvals = Mmass(sigma_A_over_om*mplot_range/constants.hbar)
+    # Make it downturn at each end
+    xvals = np.concatenate(([xvals[0]], xvals, [xvals[-1]]))
+    yvals = np.concatenate(([0], yvals, [0]))
+
+    return xvals, yvals
+
+
 ''' Clocks '''
 
 
-def Clocks_curves(idx_pair=2,idx_pair_bad=0):
+def Clocks_curves(idx_pair=2):
     m3yr=constants.hbar/(3.01*constants.Ts)
     m10min=constants.hbar/(60*10)
 
@@ -83,30 +107,26 @@ def Clocks_curves(idx_pair=2,idx_pair_bad=0):
     xvals = np.concatenate(([xvals[0]], xvals, [xvals[-1]]))
     yvals = np.concatenate(([0], yvals, [0]))
 
-    ## Cs/Sr clock
-    xvals2 = mplot_range
-    yvals2 = Mmass_of_m(mplot_range,idx_pair_bad)
+    return xvals, yvals
 
-    # Make it downturn at each end
-    xvals2 = np.concatenate(([xvals2[0]], xvals2, [xvals2[-1]]))
-    yvals2 = np.concatenate(([0], yvals2, [0]))
-
-    return xvals, yvals, xvals2, yvals2
-
-def DM_plotter(idx_pair=2, idx_pair_bad=0,
-               xlims = [1e-25, 1e-17], colorss = [colorcycle[i] for i in range(3)], savefig=False, showfig=True):
+def DM_plotter(idx_pair=2, idx_pair_bad=0, colorss = [colorcycle[i] for i in range(3)], savefig=False, showfig=True):
 
     # Square aspect ratio
     plt.figure(figsize=(5,5))
 
     ## Clocks
-    xvals, yvals, xvals2, yvals2 = Clocks_curves(idx_pair=idx_pair,idx_pair_bad=idx_pair_bad)
+    xvals, yvals, = Clocks_curves(idx_pair=idx_pair)
+    xvals2, yvals2 = Clocks_curves(idx_pair=idx_pair_bad)
+    xvalsS, yvalsS = Sherrill_curve()
 
     plt.loglog(xvals, yvals, label=dtm.names_list[idx_pair], color=colorss[0])
     plt.fill_between(xvals, yvals, 0, color=colorss[0], alpha=0.25)
 
     plt.loglog(xvals2, yvals2, label=dtm.names_list[idx_pair_bad], color=colorss[1])
     plt.fill_between(xvals2, yvals2, 0, color=colorss[1], alpha=0.25)
+
+    plt.loglog(xvalsS, yvalsS, label='Sherrill', color=colorss[2])
+    plt.fill_between(xvalsS, yvalsS, 0, color=colorss[2], alpha=0.25)
 
     ## Microscope
     Mmicr_lim, Mmicr_lim2 = Microscope_limits()
@@ -171,7 +191,7 @@ def DM_plotter(idx_pair=2, idx_pair_bad=0,
     monthplot=86400*30.
     dayplot=86400.
     hourplot=3600.
-    minplot=60.
+    minplot=70.
     ts_top_ticks = np.array([yrplot,monthplot,dayplot,hourplot,minplot])
     ts_names=[r'${\rm yr}^{-1}$',r'${\rm mth}^{-1}$',r'${\rm day}^{-1}$',r'${\rm hr}^{-1}$',r'${\rm min}^{-1}$']
 
@@ -206,7 +226,9 @@ def DM_plotter(idx_pair=2, idx_pair_bad=0,
     #plt.xlim(xlims)
     plt.ylim(1e3, 1e10)
     plt.tick_params(direction='in', which='both')
-    xp = np.power(10, np.mean(np.log10(xlims)))
+    #xp = np.power(10, np.mean(np.log10(xlims)))
+    ax1.set_xlim(xmin=1e-25, xmax=1e-17)
+    ax2.set_xlim(xmin=1e-25, xmax=1e-17)
     #plt.text(xp, 4e9, "Dark matter", ha='center', fontsize=12)
 
     #plt.axvline(x=2*np.pi*3.15e7**(-1)*hbar/3,c='grey',label='m=1/(3yr)',linestyle='dashed')
@@ -220,5 +242,5 @@ def DM_plotter(idx_pair=2, idx_pair_bad=0,
         plt.show()
     #plt.clf()
 
-
-DM_plotter(savefig=True, showfig=True)
+if __name__ == "__main__":
+    DM_plotter(savefig=True, showfig=True)
