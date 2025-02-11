@@ -46,9 +46,6 @@ To install, clone this repository and...
 
 # Authors
 
-
-# Ben's demo branch
-
 # Contact
 
 For more information or to collaborate, please contact:
