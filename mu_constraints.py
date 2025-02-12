@@ -34,15 +34,6 @@ def DE_max_amplitude(clock_pair = "CaF/Sr"):
     raise Exception("Unknown clock pair.")
     return -1
 
-def DM_helper(w, clock_pair):
-    match clock_pair:
-        case "CaF/Sr":
-            return 1
-        case "Sr/Cs":
-            return 2
-        case _:
-            raise Exception("Unknown clock pair.")
-    return -1
 
 def DM_max_amplitude(clock_pair = "CaF/Sr", nPoints = 100):
     """Maximum dark matter signal that could have escaped detection.
