@@ -207,15 +207,17 @@ def DM_plotter(idx_pair=2, idx_pair_bad=0, colorss = [colorcycle[i] for i in ran
     #ax2.set_xlabel(r'Times', fontsize=12)
 
     # Text labels for Microscope
-    plt.text(2e-24, 9e4, r'Microscope ($M_\mathrm{e} \to \infty$)', fontsize=8)
-    plt.text(2e-24, 1.4e3, r'Microscope ($M \to \infty$)', fontsize=8)
+    plt.text(1e-23, 9e4, r'Microscope ($M_\mathrm{e} \to \infty$)', fontsize=8)
+    plt.text(1e-23, 1.4e3, r'Microscope ($M \to \infty$)', fontsize=8)
 
 
-    plt.text(1e-22, 4.0e7, "CaF/Sr clocks", fontsize=10, rotation=-35)
-    plt.text(1e-22, 2.5e6, "Cs/Sr clocks", fontsize=10, rotation=-35)
+    plt.text(1e-22, 4.0e7, "CaF/Sr clocks", fontsize=10, rotation=-30)
+    plt.text(1e-22, 2.5e6, "Cs/Sr clocks", fontsize=10, rotation=-30)
+
+    plt.text(1e-20, 3e5, "Yb/Cs", fontsize=9)
 
     # A vertical label for the cutoff at 10 mins
-    plt.text(1.1e-18, 5e3, r"$m = (10~\mathrm{min})^{-1}$", fontsize = 6, rotation='vertical')
+    plt.text(1.3e-18, 5e3, r"$m = (10~\mathrm{min})^{-1}$", fontsize = 6, rotation='vertical')
 
     plt.axvline(1e-24, color='brown', linestyle='dashed')
     plt.fill_betweenx([0, 1e11], 1e-24, color='brown',alpha=0.25)
@@ -226,6 +228,7 @@ def DM_plotter(idx_pair=2, idx_pair_bad=0, colorss = [colorcycle[i] for i in ran
     #plt.xlim(xlims)
     plt.ylim(1e3, 1e10)
     plt.tick_params(direction='in', which='both')
+    ax1.tick_params(direction='in', which='both')
     #xp = np.power(10, np.mean(np.log10(xlims)))
     ax1.set_xlim(xmin=1e-25, xmax=1e-17)
     ax2.set_xlim(xmin=1e-25, xmax=1e-17)
