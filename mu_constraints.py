@@ -13,26 +13,29 @@ is detectable by that clock pair.
 
 """
 
-import math
+import pandas as pd
 import numpy as np
 
 PI = np.pi
 
-def DE_max_amplitude(clock_pair = "CaF/Sr"):
+def DE_max_amplitude(clock_pair):
     """Maximum dark energy signal that could have escaped detection.
         signal = A * t
 
     The signal is dimensionless, A has units of sec^-1
     Returns A for the given clock pair.
     """
-    match clock_pair:
-        case "CaF/Sr":
-            return 1.7e-25
-        case "Sr/Cs":
-            return 3.1e-24
-
-    raise Exception("Unknown clock pair.")
-    return -1
+    file_path = "stats/sigmas.csv"
+    
+    try:
+        df = pd.read_csv(file_path)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    
+    if clock_pair not in df.iloc[:, 0].values:
+        raise ValueError(f"Clock name '{clock_pair}' not found in the file.")
+    
+    return np.array(df[df.iloc[:, 0] == clock_pair]['sigma_A_DE'])[0]
 
 def DM_helper(w, clock_pair):
     match clock_pair:
@@ -71,8 +74,8 @@ def DM_max_amplitude(clock_pair = "CaF/Sr", nPoints = 100):
     w_max = 2*PI / 100     # 100 sec
         
     # Values logarithmically spaced between w_min and w_max
-    w_vals = np.logspace(math.log10(w_min),
-                         math.log10(w_max), nPoints)
+    w_vals = np.logspace(pd.log10(w_min),
+                         pd.log10(w_max), nPoints)
 
     # Fill in A_vals depending on the clock pair
     A_vals = []
@@ -81,29 +84,25 @@ def DM_max_amplitude(clock_pair = "CaF/Sr", nPoints = 100):
         A_vals.append(A)
     return w_vals, A_vals
 
-def MG_max_amplitude(clock_pair = "CaF/Sr"):
-    """Maximum modified gravity signal that could have escaped detection.
-        signal = A * cos(2 pi t / year)
-
-    The signal and A are dimensionless.
-
-    Returns A for the given clock pair.
-    """
-    match clock_pair:
-        case "CaF/Sr":
-            return 7.8e-18
-        case "Sr/Cs":
-            return 1.4e-16
-
-    raise Exception("Unknown clock pair.")
-    return -1
+def MG_max_amplitude(clock_pair):
+    file_path = "stats/sigmas.csv"
+    
+    try:
+        df = pd.read_csv(file_path)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    
+    if clock_pair not in df.iloc[:, 0].values:
+        raise ValueError(f"Clock name '{clock_pair}' not found in the file.")
+    
+    return np.array(df[df.iloc[:, 0] == clock_pair]['sigma_A_MOD'])[0]
 
 
 if __name__ == "__main__":
-    print("Dark energy constraint", DE_max_amplitude())
-    print("Modified gravity constraint:", MG_max_amplitude())
-    w, A = DM_max_amplitude()
-    print("Dark matter omega, A constraints:")
-    print(w)
-    print(A)
+    print("Dark energy constraint:", DE_max_amplitude('N2+/Sr'))
+    print("Modified gravity constraint:", MG_max_amplitude('N2+/Sr'))
+    #w, A = DM_max_amplitude()
+    #print("Dark matter omega, A constraints:")
+    #print(w)
+    #print(A)
 
