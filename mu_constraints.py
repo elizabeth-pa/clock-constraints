@@ -15,6 +15,7 @@ is detectable by that clock pair.
 
 import pandas as pd
 import numpy as np
+from stats import utils
 
 PI = np.pi
 
@@ -37,17 +38,7 @@ def DE_max_amplitude(clock_pair):
     
     return np.array(df[df.iloc[:, 0] == clock_pair]['sigma_A_DE'])[0]
 
-def DM_helper(w, clock_pair):
-    match clock_pair:
-        case "CaF/Sr":
-            return 1
-        case "Sr/Cs":
-            return 2
-        case _:
-            raise Exception("Unknown clock pair.")
-    return -1
-
-def DM_max_amplitude(clock_pair = "CaF/Sr", nPoints = 100):
+def DM_max_amplitude(clock_pair, nPoints = 100):
     """Maximum dark matter signal that could have escaped detection.
         signal = A/w * cos(w t)
     This signal in delta mu / mu is dimensionless.
@@ -70,18 +61,40 @@ def DM_max_amplitude(clock_pair = "CaF/Sr", nPoints = 100):
 
     # Minimum and maximum angular frequencies that are constrained
     # These in general depend on the clock pair in question.
-    w_min = 2*PI / 1e7     # year
-    w_max = 2*PI / 100     # 100 sec
+    Ts=3600*24*365
+    w_min = 2*PI / (3*Ts)     # 3 years
+    w_max = 2*PI / 600     # 10 min
+
+    w_ref = 2*PI / (3*Ts)     # year, reference value for sigmas.csv file
         
     # Values logarithmically spaced between w_min and w_max
-    w_vals = np.logspace(pd.log10(w_min),
-                         pd.log10(w_max), nPoints)
+    w_vals = np.logspace(np.log10(w_min),
+                         np.log10(w_max), nPoints)
+    
+    file_path = "stats/sigmas.csv"
+    
+    try:
+        df = pd.read_csv(file_path)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{file_path}' does not exist.")
+    
+    if clock_pair not in df.iloc[:, 0].values:
+        raise ValueError(f"Clock name '{clock_pair}' not found in the file.")
+    
+    sigma_A_0=np.array(df[df.iloc[:, 0] == clock_pair]['sigma_A_DM'])[0]
+
+    clock_couple=clock_pair.split('/')
+
+    noise_pars_list=pd.read_csv('stats/clocks_pars.csv')
+
+    row1 = noise_pars_list.loc[noise_pars_list['Clock_name'] == clock_couple[0]].iloc[0, 1:].tolist()
+    row2 = noise_pars_list.loc[noise_pars_list['Clock_name'] == clock_couple[1]].iloc[0, 1:].tolist()
+    noise_pars = row1 + row2
 
     # Fill in A_vals depending on the clock pair
-    A_vals = []
-    for w in w_vals:
-        A = DM_helper(w, clock_pair)
-        A_vals.append(A)
+    den=np.sqrt(utils.noise_PSD(w_ref/(2*np.pi),clocks_pars=noise_pars))
+    A_vals=sigma_A_0*(w_vals/w_ref)*np.sqrt(utils.noise_PSD(w_vals/(2*np.pi),clocks_pars=noise_pars))/den
+    
     return w_vals, A_vals
 
 def MG_max_amplitude(clock_pair):
@@ -101,8 +114,12 @@ def MG_max_amplitude(clock_pair):
 if __name__ == "__main__":
     print("Dark energy constraint:", DE_max_amplitude('N2+/Sr'))
     print("Modified gravity constraint:", MG_max_amplitude('N2+/Sr'))
-    #w, A = DM_max_amplitude()
-    #print("Dark matter omega, A constraints:")
-    #print(w)
-    #print(A)
-
+    from matplotlib import pyplot as plt
+    ws,As=DM_max_amplitude('CaF/Sr', nPoints = 100)
+    ws2,As2=DM_max_amplitude('Cs/Sr', nPoints = 100)
+    plt.loglog(ws,As,label='CaF/Sr')
+    plt.loglog(ws2,As2,label='Cs/Sr')
+    plt.xlabel(r'$\omega$')
+    plt.ylabel(r'A')
+    plt.legend()
+    plt.show()
