@@ -25,6 +25,8 @@ def DE_max_amplitude(clock_pair):
 
     The signal is dimensionless, A has units of sec^-1
     Returns A for the given clock pair.
+    Input:
+        clock_pair: Name of a particular clock pair
     """
     file_path = "stats/sigmas.csv"
     
@@ -61,11 +63,11 @@ def DM_max_amplitude(clock_pair, nPoints = 100):
 
     # Minimum and maximum angular frequencies that are constrained
     # These in general depend on the clock pair in question.
-    Ts=3600*24*365
-    w_min = 2*PI / (3*Ts)     # 3 years
+    T_year=3600*24*365 # year in seconds
+    w_min = 2*PI / (3*T_year)     # 3 years
     w_max = 2*PI / 600     # 10 min
 
-    w_ref = 2*PI / (3*Ts)     # year, reference value for sigmas.csv file
+    w_ref = 2*PI / (3*T_year)     # year, reference value for sigmas.csv file
         
     # Values logarithmically spaced between w_min and w_max
     w_vals = np.logspace(np.log10(w_min),
@@ -93,11 +95,21 @@ def DM_max_amplitude(clock_pair, nPoints = 100):
 
     # Fill in A_vals depending on the clock pair
     den=np.sqrt(utils.noise_PSD(w_ref/(2*np.pi),clocks_pars=noise_pars))
-    A_vals=sigma_A_0*(w_vals/w_ref)*np.sqrt(utils.noise_PSD(w_vals/(2*np.pi),clocks_pars=noise_pars))/den
+    PSD_vals=utils.noise_PSD(w_vals/(2*np.pi),clocks_pars=noise_pars)
+    A_vals=sigma_A_0*(w_vals/w_ref)*np.sqrt(PSD_vals)/den
     
     return w_vals, A_vals
 
 def MG_max_amplitude(clock_pair):
+    """Maximum modified gravity signal that could have escaped detection.
+        signal = A * cos(2 pi t / year)
+    The signal and A are dimensionless.
+    Input:
+        clock_pair: Name of a particular clock pair
+
+    Returns A for the given clock pair.
+    """
+
     file_path = "stats/sigmas.csv"
     
     try:
