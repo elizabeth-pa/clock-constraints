@@ -205,7 +205,7 @@ def DM_log_prior(pars):
 
 def DM_model(f,pars=np.array([2e-21,2*np.pi/(Ts),1.]),Ts=Ts,T_obs_yr=T_obs_yr,dt=dt):
     '''
-    Dark-Matter-inspired sinusoidal model d=A*sin(omega*t+phi) in the frequency domain
+    Dark-Matter-inspired sinusoidal model d=(A/omega)*sin(omega*t+phi) in the frequency domain
     pars is the array of the three free parameters, [A,omega,phi]
     '''
 
