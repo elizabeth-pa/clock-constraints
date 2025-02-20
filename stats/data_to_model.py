@@ -29,36 +29,36 @@ def noise_pars_wrap(idx,which_clocks=couples_list):
 
 ################## MCMC ##################
 
-def data_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt):
+def data_gen(which_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt):
     '''
     Generates datastream for a chosen phenomenological model and some fiducial value of the parameters
         in the frequency domain for a chosen pair of clocks
     Inputs:
-        - wich_model: the model considered, as a function of frequency and parameters
+        - which_model: the model considered, as a function of frequency and parameters
         - pars: array of the fiducial parameters for the model forecast
         - clocks_pars: array of the clock noise parameters
     '''
 
     freqs,noise=utils.noise_generator(clocks_pars=clocks_pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
-    signal=wich_model(freqs,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
+    signal=which_model(freqs,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
     sigmas=np.abs(noise)
     return freqs,signal+noise,sigmas
 
-def chain_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt,log_prior=lambda _:0.0):
+def chain_gen(which_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt,log_prior=lambda _:0.0):
     '''
     Generates posterior chain samples with MCMC on the phenomenological parameters for a given model
         given the fiducial value of the parameters for a chosen pair of clocks
     Inputs:
-        - wich_model: the model considered, as a function of frequency and parameters
+        - which_model: the model considered, as a function of frequency and parameters
         - pars: array of the fiducial parameters for the model forecast
         - clocks_pars: array of the clock noise parameters
     '''
 
     
-    freqs,data,sigmas=data_gen(wich_model=wich_model,pars=pars,clocks_pars=clocks_pars,Ts= Ts,T_obs_yr=T_obs_yr,dt=dt)
+    freqs,data,sigmas=data_gen(which_model=which_model,pars=pars,clocks_pars=clocks_pars,Ts= Ts,T_obs_yr=T_obs_yr,dt=dt)
     
     def model(f,parsmod):
-        return wich_model(f,pars=parsmod,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
+        return which_model(f,pars=parsmod,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
     
     chains_fa = utils.big_sampler(freqs, data, sigmas, model, pars*1. ,log_prior=log_prior)[1]
     samples = chains_fa.reshape(-1,chains_fa.shape[-1])
@@ -66,19 +66,19 @@ def chain_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=util
 
 ########## Fisher ##########
 
-def Fisher(wich_dmodel=[utils.MOD_model_d],pars = np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt):
+def Fisher(which_dmodel=[utils.MOD_model_d],pars = np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt):
     '''
     Computes the Fisher matrix of the phenomenological parameters for a given model
         given the fiducial value of the parameters for a chosen pair of clocks
     Inputs:
-        - wich_dmodel: the derivatives with respect to the phenomenological parameters
+        - which_dmodel: the derivatives with respect to the phenomenological parameters
             as a LIST of the partial derivatives of the model
         - pars: array of the fiducial parameters for the model forecast
         - clocks_pars: array of the clock noise parameters
     '''
     fred=utils.freqs_used(Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
     if len(pars)==1:
-        integrand=2*(np.abs(wich_dmodel[0](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt))**2
+        integrand=2*(np.abs(which_dmodel[0](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt))**2
                      /utils.noise_PSD(fred,clocks_pars=clocks_pars))
 
         return np.array([simps(integrand,fred)])
@@ -92,9 +92,9 @@ def Fisher(wich_dmodel=[utils.MOD_model_d],pars = np.array([5e-16]),clocks_pars=
         FFop=np.zeros((len(pars),len(pars)))
         
         for i in range(len(pars)):
-            FFop[i,i]=diag_F(wich_dmodel[i](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
+            FFop[i,i]=diag_F(which_dmodel[i](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
             for j in range(i+1,len(pars)):
-                FFop[i,j]=offdiag_F(wich_dmodel[i](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),wich_dmodel[j](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
+                FFop[i,j]=offdiag_F(which_dmodel[i](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),which_dmodel[j](fred,pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),pars=pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt)
                 FFop[j,i]=FFop[i,j]
 
         return FFop
@@ -121,27 +121,27 @@ def samps_from_Fish(fish,mean,size=10000):
 
 ########## Plotters ##########
 
-def plotter_posterior(wich_model=utils.MOD_model,pars=np.array([5e-16]),
-            wich_dmodel=[utils.MOD_model_d],
+def plotter_posterior(which_model=utils.MOD_model,pars=np.array([5e-16]),
+            which_dmodel=[utils.MOD_model_d],
             clocks_pars=utils.clocks_pars_0,Ts=utils.Ts,T_obs_yr=utils.T_obs_yr,dt=utils.dt,log_prior=lambda _:0.0, labels=['A']):
     '''
     Plotter of the posterior distribution with MCMC and with Fisher matrix approach
 
     Inputs:
-        - wich_model: the model considered, as a function of frequency and parameters
+        - which_model: the model considered, as a function of frequency and parameters
         - pars: array of the fiducial parameters for the model forecast
         - clocks_pars: array of the clock noise parameters
     '''
 
-    if len(wich_dmodel)!=len(pars) or len(wich_dmodel)!=len(labels):
+    if len(which_dmodel)!=len(pars) or len(which_dmodel)!=len(labels):
         raise Exception("Be careful with the dimensions of pars, derivatives, labels")
     
-    samples_MCMC=chain_gen(wich_model=wich_model,pars=pars,
+    samples_MCMC=chain_gen(which_model=which_model,pars=pars,
                          clocks_pars=clocks_pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt,log_prior=log_prior)
     
     samples_rescaled=samples_MCMC-np.mean(samples_MCMC,axis=0)+pars
 
-    samples_Fisher=samps_from_Fish(Fisher(wich_dmodel=wich_dmodel, pars = pars,clocks_pars=clocks_pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),pars,size=len(samples_rescaled[:,0]))
+    samples_Fisher=samps_from_Fish(Fisher(which_dmodel=which_dmodel, pars = pars,clocks_pars=clocks_pars,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt),pars,size=len(samples_rescaled[:,0]))
     
 
     if len(pars)==1:
@@ -168,13 +168,13 @@ def plotter_wrapper(which='MOD'):
 
     if which=='MOD':
         pars_ex=np.array([5e-16])
-        plotter_posterior(wich_model=utils.MOD_model,wich_dmodel=[utils.MOD_model_d],pars = pars_ex, labels=['A'])
+        plotter_posterior(which_model=utils.MOD_model,which_dmodel=[utils.MOD_model_d],pars = pars_ex, labels=['A'])
     elif which=='DE':
         pars_ex=np.array([1e-23])
-        plotter_posterior(wich_model=utils.DE_model,wich_dmodel=[utils.DE_model_d],pars = pars_ex, labels=['a'])
+        plotter_posterior(which_model=utils.DE_model,which_dmodel=[utils.DE_model_d],pars = pars_ex, labels=['a'])
     elif which=='DM':
         pars_ex=np.array([2e-21,2*np.pi/utils.Ts,1.])
-        plotter_posterior(wich_model=utils.DM_model,wich_dmodel=[utils.DM_model_dA,utils.DM_model_dom,utils.DM_model_dphi],pars = pars_ex, labels=['A','om','phi'])
+        plotter_posterior(which_model=utils.DM_model,which_dmodel=[utils.DM_model_dA,utils.DM_model_dom,utils.DM_model_dphi],pars = pars_ex, labels=['A','om','phi'])
     return
 
 ########## Forecast errors ##########
@@ -193,9 +193,9 @@ def sigmas_table(which_clocks=couples_list):
     tab_out=np.zeros((len(which_clocks),3))
 
     for i in range(len(which_clocks)):
-        samps_MOD=chain_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=noise_pars_wrap(i,which_clocks=which_clocks))
-        samps_DE=chain_gen(wich_model=utils.DE_model,pars=np.array([1e-23]),clocks_pars=noise_pars_wrap(i,which_clocks=which_clocks))
-        samps_DM=chain_gen(wich_model=utils.DM_model,pars=np.array([2e-21,2*np.pi/utils.Ts,1.]),clocks_pars=noise_pars_wrap(i,which_clocks=which_clocks),log_prior=utils.DM_log_prior)
+        samps_MOD=chain_gen(which_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=noise_pars_wrap(i,which_clocks=which_clocks))
+        samps_DE=chain_gen(which_model=utils.DE_model,pars=np.array([1e-23]),clocks_pars=noise_pars_wrap(i,which_clocks=which_clocks))
+        samps_DM=chain_gen(which_model=utils.DM_model,pars=np.array([2e-21,2*np.pi/utils.Ts,1.]),clocks_pars=noise_pars_wrap(i,which_clocks=which_clocks),log_prior=utils.DM_log_prior)
         tab_out[i,0]=np.sqrt(np.var(samps_MOD[:,0]))
         tab_out[i,1]=np.sqrt(np.var(samps_DE[:,0]))
         tab_out[i,2]=np.sqrt(np.var(samps_DM[:,0]))
