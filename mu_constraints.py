@@ -16,6 +16,7 @@ is detectable by that clock pair.
 import pandas as pd
 import numpy as np
 from stats import utils
+from stats import data_to_model as dtm
 
 PI = np.pi
 
@@ -122,6 +123,42 @@ def MG_max_amplitude(clock_pair):
     
     return np.array(df[df.iloc[:, 0] == clock_pair]['sigma_A_MOD'])[0]
 
+def DM_max_amplitude_Sherrill(instability=1.6e-13, nPoints = 100):
+    """Maximum dark matter signal that could have escaped detection.
+        signal = A/w * cos(w t)
+    This signal in delta mu / mu is dimensionless.
+
+    Inputs:
+        instability: the instability of the clock used by Sherrill et al 2302.04565
+        nPoints:    The number of A and omega values to return
+
+    Returns a tuple of two arrays of length nPoints:
+        w_vals: Angular frequencies w = 2*pi*freq that correspond to each 
+                value in the A_vals.  Covers the whole range of omega
+                that the clock pair is able to constrain.
+                These should be logarithmically distributed within the
+                range that is constrained.
+                Units of sec^-1
+        A_vals: Corresponding signal amplitudes for each angular
+                frequency in w_vals.
+                Units of sec^-1
+    """
+
+    T_year=3600*24*365 # year in seconds
+    w_min = 2*PI / (80000)     
+    w_max = 2*PI / 600
+    # Values logarithmically spaced between w_min and w_max
+    w_vals = np.logspace(np.log10(w_min),
+                         np.log10(w_max), nPoints)
+
+    # Fill in A_vals depending on the clock pair
+    h0=2 * instability**2
+    Tobs=3*T_year
+    dt=1
+    sigma0=(0.5*(Tobs/dt)/h0)**(-1/2)
+    A_vals=sigma0*w_vals
+    
+    return w_vals, A_vals
 
 if __name__ == "__main__":
     print("Dark energy constraint:", DE_max_amplitude('N2+/Sr'))
@@ -129,8 +166,10 @@ if __name__ == "__main__":
     from matplotlib import pyplot as plt
     ws,As=DM_max_amplitude('CaF/Sr', nPoints = 100)
     ws2,As2=DM_max_amplitude('Cs/Sr', nPoints = 100)
+    wsS,AsS=DM_max_amplitude_Sherrill(nPoints = 100)
     plt.loglog(ws,As,label='CaF/Sr')
     plt.loglog(ws2,As2,label='Cs/Sr')
+    plt.loglog(wsS,AsS,label='Sherrill')
     plt.xlabel(r'$\omega$')
     plt.ylabel(r'A')
     plt.legend()

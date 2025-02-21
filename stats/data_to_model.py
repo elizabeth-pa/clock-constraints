@@ -1,4 +1,4 @@
-import utils
+from stats import utils
 
 import numpy as np
 import pandas as pd
@@ -8,7 +8,7 @@ from scipy.integrate import simpson as simps
 import matplotlib.pyplot as plt
 import corner
 
-noise_pars_list=pd.read_csv('clocks_pars.csv')
+noise_pars_list=pd.read_csv('stats/clocks_pars.csv')
 
 couples_list=np.array([ # default clock couples considered
     # IMPORTANT: these names must be in agreement with the values used in the clocks_pars.csv file 
