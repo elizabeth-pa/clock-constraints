@@ -23,15 +23,18 @@ def dphi_yukawa(M_obj, r, M, m):
 def dphi_galileon_3(M_obj, r, M, Lambda):
     """ Cubic galileon """
     L = Lambda
-    rhs = M_obj / (4 * PI * M * r**3)
+    rhs = M_obj / (4*PI * M * r**3)
     return r * np.sqrt(L**3 / 2 * rhs)
 
 def dphi_galileon_4(M_obj, r, M, Lambda, c4):
     """ Quartic galileon """
     L = Lambda
-    rhs = M_obj / (4 * PI * M * r**3)
+    rhs = M_obj / (4*PI * M * r**3)
     return r * np.pow(L**6 / (2*c4) * rhs, 1/3.)
 
 def dphi_generalized(M_obj, r, M, Lambda, alpha, beta):
     """ Generalized force model """
-    return
+    out = Lambda**2
+    out *= np.pow( M_obj / (8*PI*M), alpha )
+    out *= np.pow( Lambda * r, -beta)
+    return out

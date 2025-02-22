@@ -4,8 +4,9 @@ import numpy as np
 from physical_constants import *
 import mu_constraints as mc
 import plot_options as po
+import bounds
 
-def DE_clock_bound(M, M_e, clock_pair, w = -0.95):
+def clock_bound(M, M_e, clock_pair, w = -0.95):
     # Amplitude in s^-1.  Convert to eV
     A = mc.DE_max_amplitude(clock_pair) * hbar / c
     M_eff = (M**-1 - M_e**-1)**-1
@@ -19,28 +20,16 @@ def DE_clock_bound(M, M_e, clock_pair, w = -0.95):
 
 
 def draw_clock_bound(X, Y, clocks, col, ls = 'solid', w=-0.95):
-    Z = clock_bound(
-            Mpl * np.pow(10, X),
-            Mpl * np.pow(10, Y),
-            clocks, w)
+    M   = Mpl * np.pow(10, X)
+    M_e = Mpl * np.pow(10, Y)
+
+    Z = clock_bound(M, M_e, clocks, w)
 
     plt.contour(X, Y, Z,  levels=[0.5], colors = col, linestyles=ls)
     #plt.contourf(X, Y, Z, levels=[-1, 0], colors = col, alpha = 0.3)
     return
 
 
-def microscope_bound(M, M_e):
-    eta = microscope_eta
-    eps_Pt = 2e-4
-    eps_Ti = 2.3e-4
-    eps_earth = 2.33e-4 # Iron
-
-    out = 2 * Mpl**2 * (M**-1 - M_e**-1)
-    out *= (M**-1 + eps_earth / M_e)
-    out *= (eps_Pt - eps_Ti)
-    out = np.abs(out)
-
-    return eta < out
 
 ### First plot ###
 # M_e vs M
@@ -55,12 +44,12 @@ X, Y = np.meshgrid(
         np.linspace(xmin, xmax, po.resolution),
         np.linspace(ymin, ymax, po.resolution))
 
+M  = Mpl * np.pow(10, X)
+M_e = Mpl * np.pow(10, Y)
 # Curves
 
 # Microscope #
-Z = microscope_bound(
-        Mpl * np.pow(10, X),
-        Mpl * np.pow(10, Y))
+Z = bounds.microscope_massless(M, M_e)
 plt.contour(X, Y, Z, levels=[0.5], colors='gray', linewidths = 1)
 plt.contourf(X, Y, Z, levels=[0.5, 1.], colors='gray', alpha = 0.5)
 
@@ -110,11 +99,14 @@ X, Y = np.meshgrid(
 
 # Microscope #
 
-Z = microscope_bound(Mpl * np.pow(10, Y), np.inf)
+w = X
+Meff = Mpl * np.pow(10, Y)
+
+Z = bounds.microscope_massless(Meff, np.inf)
 plt.contour(X, Y, Z, levels=[0.5], colors='gray')
 plt.contourf(X, Y, Z, levels=[0.5, 1], colors='gray', alpha=0.5)
 
-Z = microscope_bound(np.inf, Mpl * np.pow(10, Y))
+Z = bounds.microscope_massless(np.inf, Meff)
 plt.contour(X, Y, Z, levels=[0.5], colors='gray')
 plt.contourf(X, Y, Z, levels=[0.5, 1], colors='gray', alpha=0.5)
 
@@ -123,19 +115,11 @@ plt.text(-0.999, 3.225, r"Microscope ($M \to \infty$)", ha = "left", fontsize=6)
 
 
 # Clocks #
-Z = clock_bound(
-        Mpl * np.pow(10, Y),
-        np.inf,
-        'CaF/Sr',
-        X)
+Z = clock_bound(Meff, np.inf, 'CaF/Sr', w)
 plt.contour(X, Y, Z,  levels=[0.5], colors=po.colorcycle[0])
 plt.contourf(X, Y, Z,  levels=[0.5,1], colors=po.colorcycle[0], alpha=0.3)
 
-Z = clock_bound(
-        Mpl * np.pow(10, Y),
-        np.inf,
-        'Cs/Sr',
-        X)
+Z = clock_bound(Meff, np.inf, 'Cs/Sr', w) 
 plt.contour(X, Y, Z,  levels=[0.5], colors=po.colorcycle[1])
 plt.contourf(X, Y, Z,  levels=[0.5,1], colors=po.colorcycle[1], alpha=0.3)
 
@@ -143,11 +127,8 @@ plt.text(-0.98, 6.15, "CaF/Sr clocks", color='black', rotation=7, fontsize=12)
 plt.text(-0.98, 4.9, "Cs/Sr clocks", color='black', rotation=7, fontsize=12)
 
 
-# Planck #
-def planck_bound(w):
-    return -0.95 < w
-Z = planck_bound(X)
-
+# Planck
+Z = bounds.planck(w)
 plt.contour(X, Y, Z,  levels=[0.5], colors = 'brown')
 plt.contourf(X, Y, Z,  levels=[0.5, 1], colors = 'brown', alpha=0.3)
 plt.text(-0.9495, 3.75, "Planck", rotation = "vertical", fontsize=8)
