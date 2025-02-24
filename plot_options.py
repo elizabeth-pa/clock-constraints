@@ -18,5 +18,4 @@ dpi_setting = 300
 # of the plots.
 resolution = 1000
 
-
 title_box_properties = dict(boxstyle='round', facecolor = "white", alpha=1.0)
