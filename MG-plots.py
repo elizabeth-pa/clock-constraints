@@ -94,6 +94,28 @@ plt.text(-14.9, -5, r"${\rm AU} < R_{\rm V4}$",
 plt.xlabel(r'$\log_{10} \Lambda ~/~ \mathrm{eV}$', fontsize=12)
 plt.ylabel(r'$\log_{10} M ~/~ M_\mathrm{Pl}$', fontsize=12)
 
+# Second set of axes
+def Lambda_to_mg(L):
+    L = np.pow(10, L)
+    out = np.sqrt(L**3 / Mpl)
+    out = np.log10(out)
+    return out
+
+def mg_to_Lambda(mg):
+    mg = np.pow(10, mg)
+    out = np.pow(mg**2 * Mpl, 1/3.)
+    out = np.log10(out)
+    return out
+
+ax = plt.gca()
+# For this to work automatically, two functions converting to/from
+# the two axis coordinates are needed.
+ax2 = ax.secondary_xaxis('top', functions=(Lambda_to_mg, mg_to_Lambda))
+
+ax2.tick_params(direction='in')
+ax2.set_xlabel(r'$\log_{10} m_g ~/~ \mathrm{eV}$', fontsize=12)
+
+#
 plt.savefig("plots/MG-gal-M-vs-Lambda.png", dpi=po.dpi_setting)
 
 plt.show()

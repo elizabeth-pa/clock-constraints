@@ -36,6 +36,12 @@ def microscope(M, M_e, dphi):
 
     # TO DO: m should be fixed up to only be sourced by the 
     # appropriate combination of m, M, M_e
+    # Not currently needed since we almost always  set M_e \to \infty.
+    # The single time this isn't the case is handled with
+    # microscope_massless().
+
+    # The dphi functions generally set M_e \to \infty
+    #Q = m * (M**-1 + eps_earth / M_e**-1) * 1 / (1 + eps_earth)
 
     out = 8 * PI * Mpl**2 * R**2 / m
     out *= (M**-1 - M_e**-1)
