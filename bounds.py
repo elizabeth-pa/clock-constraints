@@ -54,3 +54,6 @@ def microscope(M, M_e, dphi):
 
 def planck(w):
     return -0.95 < w
+
+def DM_CMB(m):
+    return m < 1e-24
