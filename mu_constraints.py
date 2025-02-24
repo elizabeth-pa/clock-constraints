@@ -16,7 +16,6 @@ is detectable by that clock pair.
 import pandas as pd
 import numpy as np
 from stats import utils
-from stats import data_to_model as dtm
 
 PI = np.pi
 
