@@ -34,6 +34,9 @@ def microscope(M, M_e, dphi):
     R = microscope_r
     m = earth_mass
 
+    # TO DO: m should be fixed up to only be sourced by the 
+    # appropriate combination of m, M, M_e
+
     out = 8 * PI * Mpl**2 * R**2 / m
     out *= (M**-1 - M_e**-1)
     out *= (eps_Pt - eps_Ti)
