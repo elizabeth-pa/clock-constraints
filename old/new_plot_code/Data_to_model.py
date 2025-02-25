@@ -31,18 +31,18 @@ def noise_pars_wrap(couple):
 
 ################## MCMC ##################
 
-def data_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts= constants.Ts,nyr=3.01,dt=1):
+def data_gen(which_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts= constants.Ts,nyr=3.01,dt=1):
     freqs,noise=utils.noise_generator(clocks_pars=clocks_pars,Ts=Ts,nyr=nyr,dt=dt)
-    signal=wich_model(freqs,pars=pars,Ts=Ts,nyr=nyr,dt=dt)
+    signal=which_model(freqs,pars=pars,Ts=Ts,nyr=nyr,dt=dt)
     sigmas=np.abs(noise)
     return freqs,signal+noise,sigmas
 
-def chain_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts= constants.Ts,nyr=3.01,dt=1,log_prior=lambda _:0.0):
+def chain_gen(which_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts= constants.Ts,nyr=3.01,dt=1,log_prior=lambda _:0.0):
     
-    freqs,data,sigmas=data_gen(wich_model=wich_model,pars=pars,clocks_pars=clocks_pars,Ts= Ts,nyr=nyr,dt=dt)
+    freqs,data,sigmas=data_gen(which_model=which_model,pars=pars,clocks_pars=clocks_pars,Ts= Ts,nyr=nyr,dt=dt)
     
     def model(f,parsmod):
-        return wich_model(f,pars=parsmod,Ts=Ts,nyr=nyr,dt=dt)
+        return which_model(f,pars=parsmod,Ts=Ts,nyr=nyr,dt=dt)
     
     chains_fa = utils.big_sampler(freqs, data, sigmas, model, pars*1. ,log_prior=log_prior)[1]
     samples = chains_fa.reshape(-1,chains_fa.shape[-1])
@@ -50,11 +50,11 @@ def chain_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=util
 
 ########## Fisher ##########
 
-def Fisher(wich_dmodel=[utils.MOD_model_d],pars = np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=constants.Ts,nyr=3.01,dt=1):
+def Fisher(which_dmodel=[utils.MOD_model_d],pars = np.array([5e-16]),clocks_pars=utils.clocks_pars_0,Ts=constants.Ts,nyr=3.01,dt=1):
 
     fred=utils.freqs_used(Ts=Ts,nyr=nyr,dt=dt)
     if len(pars)==1:
-        integrand=2*(np.abs(wich_dmodel[0](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt))**2
+        integrand=2*(np.abs(which_dmodel[0](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt))**2
                      /utils.noise_PSD(fred,clocks_pars=clocks_pars))
 
         return np.array([simps(integrand,fred)])
@@ -68,9 +68,9 @@ def Fisher(wich_dmodel=[utils.MOD_model_d],pars = np.array([5e-16]),clocks_pars=
         FFop=np.zeros((len(pars),len(pars)))
         
         for i in range(len(pars)):
-            FFop[i,i]=diag_F(wich_dmodel[i](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt),pars=pars,Ts=Ts,nyr=nyr,dt=dt)
+            FFop[i,i]=diag_F(which_dmodel[i](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt),pars=pars,Ts=Ts,nyr=nyr,dt=dt)
             for j in range(i+1,len(pars)):
-                FFop[i,j]=offdiag_F(wich_dmodel[i](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt),wich_dmodel[j](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt),pars=pars,Ts=Ts,nyr=nyr,dt=dt)
+                FFop[i,j]=offdiag_F(which_dmodel[i](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt),which_dmodel[j](fred,pars=pars,Ts=Ts,nyr=nyr,dt=dt),pars=pars,Ts=Ts,nyr=nyr,dt=dt)
                 FFop[j,i]=FFop[i,j]
 
         return FFop
@@ -92,19 +92,19 @@ def samps_from_Fish(fish,mean,size=10000):
 
 ########## Plotters ##########
 
-def plotter_posterior(wich_model=utils.MOD_model,pars=np.array([5e-16]),
-            wich_dmodel=[utils.MOD_model_d],
+def plotter_posterior(which_model=utils.MOD_model,pars=np.array([5e-16]),
+            which_dmodel=[utils.MOD_model_d],
             clocks_pars=utils.clocks_pars_0,Ts=constants.Ts,nyr=3.01,dt=1,log_prior=lambda _:0.0, labels=['A']):
     
-    if len(wich_dmodel)!=len(pars) or len(wich_dmodel)!=len(labels):
+    if len(which_dmodel)!=len(pars) or len(which_dmodel)!=len(labels):
         raise Exception("Be careful with the dimensions of pars, derivatives, labels")
     
-    samples_MCMC=chain_gen(wich_model=wich_model,pars=pars,
+    samples_MCMC=chain_gen(which_model=which_model,pars=pars,
                          clocks_pars=clocks_pars,Ts=Ts,nyr=nyr,dt=dt,log_prior=log_prior)
     
     samples_rescaled=samples_MCMC-np.mean(samples_MCMC,axis=0)+pars
 
-    samples_Fisher=samps_from_Fish(Fisher(wich_dmodel=wich_dmodel, pars = pars,clocks_pars=clocks_pars,Ts=Ts,nyr=nyr,dt=dt),pars,size=len(samples_rescaled[:,0]))
+    samples_Fisher=samps_from_Fish(Fisher(which_dmodel=which_dmodel, pars = pars,clocks_pars=clocks_pars,Ts=Ts,nyr=nyr,dt=dt),pars,size=len(samples_rescaled[:,0]))
     
 
     if len(pars)==1:
@@ -127,13 +127,13 @@ def plotter_posterior(wich_model=utils.MOD_model,pars=np.array([5e-16]),
 def plotter_wrapper(which='MOD'):
     if which=='MOD':
         pars_ex=np.array([5e-16])
-        plotter_posterior(wich_model=utils.MOD_model,wich_dmodel=[utils.MOD_model_d],pars = pars_ex, labels=['A'])
+        plotter_posterior(which_model=utils.MOD_model,which_dmodel=[utils.MOD_model_d],pars = pars_ex, labels=['A'])
     elif which=='DE':
         pars_ex=np.array([1e-23])
-        plotter_posterior(wich_model=utils.DE_model,wich_dmodel=[utils.DE_model_d],pars = pars_ex, labels=['a'])
+        plotter_posterior(which_model=utils.DE_model,which_dmodel=[utils.DE_model_d],pars = pars_ex, labels=['a'])
     elif which=='DM':
         pars_ex=np.array([2e-21,2*np.pi/constants.Ts,1.])
-        plotter_posterior(wich_model=utils.DM_model,wich_dmodel=[utils.DM_model_dA,utils.DM_model_dom,utils.DM_model_dphi],pars = pars_ex, labels=['A','om','phi'])
+        plotter_posterior(which_model=utils.DM_model,which_dmodel=[utils.DM_model_dA,utils.DM_model_dom,utils.DM_model_dphi],pars = pars_ex, labels=['A','om','phi'])
     return
 
 ########## Table producer ##########
@@ -142,9 +142,9 @@ def sigmas_table(which_clocks=names_list,save=False):
     tab_out=np.zeros((len(which_clocks),3))
 
     for i in range(len(which_clocks)):
-        samps_MOD=chain_gen(wich_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=noise_pars_wrap(i))
-        samps_DE=chain_gen(wich_model=utils.DE_model,pars=np.array([1e-23]),clocks_pars=noise_pars_wrap(i))
-        samps_DM=chain_gen(wich_model=utils.DM_model,pars=np.array([2e-21,2*np.pi/constants.Ts,1.]),clocks_pars=noise_pars_wrap(i),log_prior=utils.DM_log_prior)
+        samps_MOD=chain_gen(which_model=utils.MOD_model,pars=np.array([5e-16]),clocks_pars=noise_pars_wrap(i))
+        samps_DE=chain_gen(which_model=utils.DE_model,pars=np.array([1e-23]),clocks_pars=noise_pars_wrap(i))
+        samps_DM=chain_gen(which_model=utils.DM_model,pars=np.array([2e-21,2*np.pi/constants.Ts,1.]),clocks_pars=noise_pars_wrap(i),log_prior=utils.DM_log_prior)
         tab_out[i,0]=np.sqrt(np.var(samps_MOD[:,0]))
         tab_out[i,1]=np.sqrt(np.var(samps_DE[:,0]))
         tab_out[i,2]=np.sqrt(np.var(samps_DM[:,0]))
