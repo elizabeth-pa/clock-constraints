@@ -1,4 +1,4 @@
-# Clock Constraints on fundamental physics
+# Clock constraints on fundamental physics
 
 This project is designed to generate simulated data based on the characteristics of your atomic clocks and use Markov Chain Monte Carlo (MCMC) methods to estimate unknown parameters of various physics models. The results are then used to establish constraints on the proposed theories.
 
