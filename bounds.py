@@ -2,8 +2,6 @@ import numpy as np
 
 from physical_constants import *
 
-PI = np.pi
-
 microscope_eta = np.sqrt(2.3**2 + 1.5**2) * 1e-15
 microscope_r = 7000 * 1e5 / hbar
 

@@ -10,7 +10,7 @@
 
 import numpy as np
 
-PI = np.pi
+from math import pi as PI
 
 def massless(M_obj, r, M):
     """ Massless scalar """

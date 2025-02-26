@@ -7,6 +7,8 @@ natural units in which c = hbar = 1.
 Here Mpl = (8 pi G)^{-1/2} is the reduced Planck mass.
 '''
 
+from math import pi as PI
+
 ### Fundamental constants ###
 hbar = 2e-5     # cm eV
 c    = 3e10     # cm s^-1
