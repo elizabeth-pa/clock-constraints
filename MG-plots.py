@@ -9,11 +9,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physical_constants import *
+from theory.physical_constants import *
+import theory.bounds as bounds
+import theory.field_solutions as dphi
+
 import mu_constraints as mc
 import plot_options as po
-import field_solutions as dphi
-import bounds
 
 def clock_bound(M, dphi):
     """ Modified gravity clock signal.

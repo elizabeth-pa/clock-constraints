@@ -9,11 +9,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physical_constants import *
+from theory.physical_constants import *
+import theory.bounds as bounds
+
 import mu_constraints as mc
 import plot_options as po
-#import field_solutions as dphi
-import bounds
 
 ### Ultralight dark matter bounds ###
 plt.figure(1, figsize=po.figsize)
@@ -107,7 +107,7 @@ plt.tick_params(direction='in')
 
 x_pos = np.mean([xmin, xmax])
 props = po.title_box_properties
-plt.text(x_pos, 9.55, "Dark matter",
+plt.text(x_pos, 9.55, "Ultralight Dark Matter",
          ha='center', fontsize=12, bbox=props)
 
 

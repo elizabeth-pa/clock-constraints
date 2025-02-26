@@ -6,10 +6,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from physical_constants import *
+from theory.physical_constants import *
+import theory.bounds as bounds
 import mu_constraints as mc
 import plot_options as po
-import bounds
 
 def clock_bound(M, M_e, clock_pair, w = -0.95):
     # Amplitude in s^-1.  Convert to eV

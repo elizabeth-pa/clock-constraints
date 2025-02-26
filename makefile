@@ -3,6 +3,7 @@
 
 .PHONY: plots
 plots:
+	# The & makes them run in parallel
 	python MG-plots.py
 	python DE-plots.py
 	python DM-plots.py
