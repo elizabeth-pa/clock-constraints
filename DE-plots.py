@@ -8,15 +8,14 @@ import numpy as np
 
 from theory.physical_constants import *
 import theory.bounds as bounds
+
 import mu_constraints as mc
 import plot_options as po
 
-def clock_bound(M, M_e, clock_pair, w = -0.95):
+def clock_bound(M, M_e, clock_pair, w=-0.95):
     # Amplitude in s^-1.  Convert to eV
     A = mc.DE_max_amplitude(clock_pair) * hbar / c
     M_eff = (M**-1 - M_e**-1)**-1
-
-    #w = -0.95
 
     X = rho_DE * (1. + w) / (1. - w)
 
@@ -24,7 +23,7 @@ def clock_bound(M, M_e, clock_pair, w = -0.95):
     return A < np.sqrt(X) / M_eff   # False = 0, True = 1
 
 
-def draw_clock_bound(X, Y, clocks, col, ls = 'solid', w=-0.95):
+def draw_clock_bound(X, Y, clocks, col, ls='solid', w=-0.95):
     M   = Mpl * np.pow(10, X)
     M_e = Mpl * np.pow(10, Y)
 
