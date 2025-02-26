@@ -4,7 +4,7 @@
     Creates the two dark matter plots in the paper.
     One is for an ultralight dark matter theory,
     and the other is for the raw signal
-        \delta \mu(t) = A / w cos(w t)
+        delta mu = A / w cos(w t)
 """
 import matplotlib.pyplot as plt
 import numpy as np

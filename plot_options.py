@@ -1,7 +1,9 @@
 """
     plot_options.py
 
-    Various settings for matplotlib
+    Various settings for matplotlib.
+    IMPORTANT: for the final versions of the plots, turn up the
+    resolution to something like 10k
 """
 
 import matplotlib.pyplot as plt
@@ -18,6 +20,6 @@ dpi_setting = 300
 # Around 1k looks ok and is fast.
 # Set this to a high value (~10k) for the final versions
 # of the plots.
-resolution = 1000
+resolution = 10000
 
 title_box_properties = dict(boxstyle='round', facecolor = "white", alpha=1.0)
