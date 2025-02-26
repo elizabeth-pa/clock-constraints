@@ -3,8 +3,9 @@
 
 .PHONY: plots
 plots:
-	python make_plots.py
-	python DM-A-vs-omega.py
+	python MG-plots.py
+	python DE-plots.py
+	python DM-plots.py
 
 .PHONY: clean
 clean:

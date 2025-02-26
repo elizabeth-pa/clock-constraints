@@ -1,10 +1,12 @@
 '''
-physical_constants.py
+    physical_constants.py
 
-Used for the theory plots.  All quantities are converted to eV, that is,
-natural units in which c = hbar = 1.
+    Used for the theory plots.
 
-Here Mpl = (8 pi G)^{-1/2} is the reduced Planck mass.
+    All quantities are converted to eV, i.e.
+    natural units in which c = hbar = 1.
+
+    Here Mpl = (8 pi G)^{-1/2} is the reduced Planck mass.
 '''
 
 from math import pi as PI

@@ -1,3 +1,11 @@
+"""
+    MG-plots.py
+
+    Creates the two modified gravity plots in the paper.
+    One is for the galileon (cubic and quartic), the second
+    is for the generalized interaction model that is described
+    in the paper.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -203,4 +211,4 @@ plt.ylabel(r"$\alpha$", fontsize=12)
 
 plt.savefig("plots/MG-gen-alpha-vs-beta.png", dpi=po.dpi_setting)
 
-plt.show()
+#plt.show()

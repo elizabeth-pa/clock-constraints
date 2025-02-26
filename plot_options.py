@@ -1,5 +1,7 @@
 """
-Options for the plots
+    plot_options.py
+
+    Various settings for matplotlib
 """
 
 import matplotlib.pyplot as plt

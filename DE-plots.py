@@ -1,3 +1,8 @@
+"""
+    DE-plots.py
+
+    Creates the two dark energy plots in the paper.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -153,4 +158,4 @@ plt.ylabel(r"$\log_{10} M_{\rm eff} ~/~ M_\mathrm{Pl}$", fontsize=12)
 
 plt.savefig("plots/DE-Meff-vs-w.png", dpi=po.dpi_setting)
 
-plt.show()
+#plt.show()

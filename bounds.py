@@ -1,3 +1,10 @@
+"""
+    bounds.py
+
+    A number of existing bounds on the various theories
+    under consideration.
+    Particularly MICROSCOPE and CMB bounds.
+"""
 import numpy as np
 
 from physical_constants import *

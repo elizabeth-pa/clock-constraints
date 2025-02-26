@@ -1,3 +1,11 @@
+"""
+    DM-plots.py
+
+    Creates the two dark matter plots in the paper.
+    One is for an ultralight dark matter theory,
+    and the other is for the raw signal
+        \delta \mu(t) = A / w cos(w t)
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -188,4 +196,5 @@ plt.text(x_pos, -15.65, "Dark Matter Signal",
          ha='center', fontsize=12, bbox=props)
 
 plt.savefig("plots/DM-A-vs-f.png", dpi=po.dpi_setting)
-plt.show()
+
+#plt.show()
