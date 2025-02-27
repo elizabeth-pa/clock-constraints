@@ -1,5 +1,5 @@
 """
-    DM-plots.py
+    plot_DM.py
 
     Creates the two dark matter plots in the paper.
     One is for an ultralight dark matter theory,
@@ -141,7 +141,7 @@ plt.text(-22.65, 3.5, r"$m = 2 \pi (3~\mathrm{yr})^{-1}$",
 plt.xlabel(r"$\log_{10} m ~/~ \mathrm{eV}$", fontsize=12)
 plt.ylabel(r"$\log_{10} M_\mathrm{eff} ~/~  M_\mathrm{Pl}$", fontsize=12)
 
-plt.savefig("plots/DM-M-vs-m.png", dpi=po.dpi_setting)
+plt.savefig("plots/DM_M_vs_m.png", dpi=po.dpi_setting)
 
 ### Raw signal constraint plot ###
 
@@ -195,6 +195,6 @@ x_pos = np.mean([xmin, xmax])
 plt.text(x_pos, -15.65, "Dark Matter Signal",
          ha='center', fontsize=12, bbox=props)
 
-plt.savefig("plots/DM-A-vs-f.png", dpi=po.dpi_setting)
+plt.savefig("plots/DM_A_vs_f.png", dpi=po.dpi_setting)
 
 #plt.show()

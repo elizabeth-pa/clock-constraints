@@ -51,7 +51,7 @@ other common useful tasks.  To generate the plots, run the command
 ```
 The plot-generation scripts can also be run individually, if desired, e.g.
 ```
-> python MG-plots.py
+> python plot_MG.py
 ```
 
 ---

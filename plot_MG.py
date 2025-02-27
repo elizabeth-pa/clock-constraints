@@ -1,5 +1,5 @@
 """
-    MG-plots.py
+    plot_MG.py
 
     Creates the two modified gravity plots in the paper.
     One is for the galileon (cubic and quartic), the second
@@ -140,7 +140,7 @@ ax2 = ax.secondary_xaxis('top', functions=(Lambda_to_mg, mg_to_Lambda))
 ax2.tick_params(direction='in')
 ax2.set_xlabel(r'$\log_{10} m_g ~/~ \mathrm{eV}$', fontsize=12)
 
-plt.savefig("plots/MG-gal-M-vs-Lambda.png", dpi=po.dpi_setting)
+plt.savefig("plots/MG_gal_M_vs_Lambda.png", dpi=po.dpi_setting)
 
 
 ### Generalized model ###
@@ -210,6 +210,6 @@ plt.text(1.0, 0.975, 'Generalized interaction',
 plt.xlabel(r"$\beta$", fontsize=12)
 plt.ylabel(r"$\alpha$", fontsize=12)
 
-plt.savefig("plots/MG-gen-alpha-vs-beta.png", dpi=po.dpi_setting)
+plt.savefig("plots/MG_gen_alpha_vs_beta.png", dpi=po.dpi_setting)
 
 #plt.show()

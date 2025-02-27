@@ -1,5 +1,5 @@
 """
-    DE-plots.py
+    plot_DE.py
 
     Creates the two dark energy plots in the paper.
 """
@@ -83,7 +83,7 @@ props = dict(boxstyle='round', facecolor = "white", alpha=1.0)
 plt.text(6, 7.7, "Dark Energy",
          fontsize=12, ha='center', bbox=po.title_box_properties)
 
-plt.savefig("plots/DE-Me-vs-M.png", dpi=po.dpi_setting)
+plt.savefig("plots/DE_Me_vs_M.png", dpi=po.dpi_setting)
 
 ### Second plot ###
 # M_eff vs w
@@ -155,6 +155,6 @@ plt.tick_params( direction = 'in' )
 plt.xlabel(r"DE equation of state $w$", fontsize=12)
 plt.ylabel(r"$\log_{10} M_{\rm eff} ~/~ M_\mathrm{Pl}$", fontsize=12)
 
-plt.savefig("plots/DE-Meff-vs-w.png", dpi=po.dpi_setting)
+plt.savefig("plots/DE_Meff_vs_w.png", dpi=po.dpi_setting)
 
 #plt.show()
