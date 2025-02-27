@@ -8,6 +8,7 @@
 
 import numpy as np
 
+# This expects to be run from the parent folder, i.e. in plot_DE.py etc
 from theory.physical_constants import *
 
 microscope_eta = np.sqrt(2.3**2 + 1.5**2) * 1e-15
