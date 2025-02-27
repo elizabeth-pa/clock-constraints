@@ -3,8 +3,10 @@
 
 .PHONY: plots
 plots:
-	python make_plots.py
-	python DM-A-vs-omega.py
+	# The & makes them run in parallel
+	python MG-plots.py
+	python DE-plots.py
+	python DM-plots.py
 
 .PHONY: clean
 clean:
