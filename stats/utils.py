@@ -18,7 +18,7 @@ Kb=1
 import numpy as np
 import emcee
 
-from scipy.fft import fft, fftfreq
+from scipy.fft import fftfreq
 
 ########## Frequencies array for freq-domain analysis ##########
 
@@ -129,7 +129,7 @@ def noise_generator(clocks_pars=clocks_pars_0,Ts=Ts,T_obs_yr=T_obs_yr,dt=dt):
         * N) * np.exp(-2j * np.pi * np.random.uniform(size = len(fred)))
 
 
-################## Theory models ##################
+################## Phenomenological models ##################
 
 # Modified gravity
 
