@@ -11,13 +11,24 @@ This project is designed to generate simulated data based on the characteristics
 # How It Works
 
 ## Data Generation
-We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). 
+We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values used by the customers should be put in table stats/clock_pars.csv in the form of h0, and h-1 coefficients, according to the conversion from the Allen variance explained in https://en.wikipedia.org/wiki/Allan_variance. Then pdate the couples of clocks used in the table stats/clock_pars.csv and you will be ready to run the data generation and analysis!
+Firstly, you generate in frequency domain the simulated noise, given the two clocks noise contributions considered.
 
 ## Signal Injection
-Once the data is generated, we inject the desired signal based on the theory model at hand.
+Once the data is generated, we inject the desired signal based on the phenomenological model at hand. We consider three different phenomenological models:
+1. A Modified-Gravity-inspired sinusoidal time modulation of the relative shift of clocks datastream, with known phase and frequency (that corresponds to the Earth's motion) and unknown amplitude
+2. A Dark-Energy-inspired linear time drift of the relative shift of clocks datastream
+3. A Dark-Matter-inspired sinusoidal time modulation of the relative shift of clocks datastream, with unknown phase, frequency and amplitude
 
-## MCMC Analysis
-Using the injected data, we apply the Markov Chain Monte Carlo (MCMC) method to estimate unknown parameters of various physics models. MCMC generates a posterior distribution of the unknown parameters.
+All these functions are present in stats/data_to_model.py and stats/utils.py
+
+## Parameter estimation techniques
+Using the injected data, we apply the Markov Chain Monte Carlo (MCMC) and Fisher methods to forecast the reconstruction of the posterior distribution for the parameters of the phenomenological models considered.
+The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in stats/data_to_model.py and stats/utils.py as indicated
+
+The output of both the MCMC and Fisher methods are a fair set of samples from the posterior distributions of the phenomenological parameters.
+
+In particular, in the table stats/sigmas.csv there are the forecast width of the posterior distribution in the direction of the amplitude of the signal, for each of the three phenomenological models considered, assuming flat prior in the parameters (and after marginalizing in the frequency and phase parameters for the DM-inspired model)
 
 ## Theory Constraints
 The estimated parameters are then used to derive constraints for the proposed physics theories. 
