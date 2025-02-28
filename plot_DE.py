@@ -15,12 +15,22 @@ import plot_options as po
 def clock_bound(M, M_e, clock_pair, w=-0.95):
     # Amplitude in s^-1.  Convert to eV
     A = mc.DE_max_amplitude(clock_pair) * hbar / c
-    M_eff = (M**-1 - M_e**-1)**-1
 
-    X = rho_DE * (1. + w) / (1. - w)
+    # This throws a divide error, for the cases M == M_e
+    # and a square root error for X = 0
+    # Running inside a with block suppresses these errors,
+    # which are handled later
+    with np.errstate(divide='ignore', invalid='ignore'):
+        M_eff = (M**-1 - M_e**-1)**-1
 
-    M_eff = np.abs(M_eff)
-    return A < np.sqrt(X) / M_eff   # False = 0, True = 1
+        X = rho_DE * (1. + w) / (1. - w)
+
+        M_eff = np.abs(M_eff)
+        out =  A < np.sqrt(X) / M_eff   # False = 0, True = 1
+
+    # Replace the NaNs with 0
+    out = np.nan_to_num(out)
+    return out
 
 
 def draw_clock_bound(X, Y, clocks, col, ls='solid', w=-0.95):
