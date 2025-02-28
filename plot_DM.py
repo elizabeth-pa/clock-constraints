@@ -80,6 +80,21 @@ plt.contourf(X, Y, Z, levels = [0.5, 1], alpha = 0.3, colors=col)
 
 plt.text(-24.25, 6, r'CMB & LSS', rotation='vertical', fontsize=8)
 
+# H/Si clocks
+x, y = bounds.HSi_ULDM()
+x = np.log10(x)
+y = np.log10(y / Mpl)
+
+x = np.concatenate( ([x[0]], x, [x[-1]]) )
+y = np.concatenate( ([0], y, [0]) )
+
+col = 'forestgreen'
+plt.plot(x, y, color=col)
+plt.fill_between(x, -100, y, color=col, alpha=0.3)
+
+plt.text(-20.2, 4, "Sr/H/Si\nclocks", fontsize=8, ha='center')
+
+
 # Text labels for clocks
 plt.text(-22, 7.5, "CaF/Sr clocks", fontsize=10, rotation=-34)
 plt.text(-22, 6.35, "Cs/Sr clocks", fontsize=10, rotation=-34)
@@ -91,10 +106,10 @@ Z = bounds.microscope_massless(Meff, np.inf)
 plt.contour(X, Y, Z, levels = [0.5], colors=col)
 plt.contourf(X, Y, Z, levels = [0.5, 1], alpha = 0.3, colors=col)
 
-plt.text(-22.25, 4.96, r'Microscope ($M_\mathrm{e} \to \infty$)',
-         fontsize=8)
-plt.text(-22.25, 3.15, r'Microscope ($M \to \infty$)',
-         fontsize=8)
+plt.text(-24.75, 4.96, r'Microscope ($M_\mathrm{e} \to \infty$)',
+         fontsize=7)
+plt.text(-24.75, 3.15, r'Microscope ($M \to \infty$)',
+         fontsize=7)
 
 Z = bounds.microscope_massless(np.inf, Meff)
 plt.contour(X, Y, Z, levels = [0.5], colors=col)
@@ -132,9 +147,9 @@ ax2.tick_params(direction='in')
 ax2.set_xlabel(r'Frequency $\log_{10} \frac{m}{2\pi} ~/~ \mathrm{Hz}$',
                fontsize=10)
 
-plt.text(-17.1, 3.5, r"$m = 2 \pi (10~\mathrm{min})^{-1}$",
+plt.text(-17.1, 3.75, r"$m = 2 \pi (10~\mathrm{min})^{-1}$",
          fontsize = 6, rotation='vertical', ha='left')
-plt.text(-22.65, 3.5, r"$m = 2 \pi (3~\mathrm{yr})^{-1}$",
+plt.text(-22.65, 3.75, r"$m = 2 \pi (3~\mathrm{yr})^{-1}$",
          fontsize = 6, rotation='vertical', ha='left')
 
 
@@ -170,14 +185,30 @@ def draw_raw_clock_bound(clocks, color):
     plt.fill_between(x, y, 0, alpha=0.3, color=color)
     return
 
+# Clock bounds
 draw_raw_clock_bound('CaF/Sr', po.colorcycle[0])
 draw_raw_clock_bound('Cs/Sr', po.colorcycle[1])
 draw_raw_clock_bound('Sherrill', 'purple')
 
 plt.text(-7.5, -23.35, "CaF/Sr clocks", fontsize=10, rotation=17)
 plt.text(-7.5, -22.1, "Cs/Sr clocks", fontsize=10, rotation=17)
-plt.text(-4, -19, 'Yb/Cs\nclocks', ha='center', fontsize=8)
+plt.text(-4, -19.15, 'Yb/Cs\nclocks', ha='center', fontsize=8)
 
+# H/Si bounds
+x, y = bounds.HSi_amplitude()
+x = np.log10(x)
+y = np.log10(y)
+
+x = np.concatenate( ([x[0]], x, [x[-1]]) )
+y = np.concatenate( ([0], y, [0]) )
+
+col = 'forestgreen'
+plt.plot(x, y, color=col)
+plt.fill_between(x, y, 100, color=col, alpha=0.3)
+
+plt.text(-5.75, -19, "Sr/H/Si\nclocks", fontsize=8, ha='center')
+
+# Labels etc
 plt.text(-2.72, -18, r"$f = (10~\mathrm{min})^{-1}$",
          fontsize = 6, rotation='vertical', ha='left')
 plt.text(-8.2, -18, r"$f = (3~\mathrm{yr})^{-1}$",

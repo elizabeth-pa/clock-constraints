@@ -64,3 +64,48 @@ def planck(w):
 
 def DM_CMB(m):
     return m < 1e-24
+
+def HSi_ULDM():
+    """ H/Si clock bounds
+    https://arxiv.org/pdf/2008.08773
+    Converts to our M_eff coupling.  Returns an array of m values,
+    and an array of the corresponding M_eff values that are the bound.
+    """
+    fname = 'theory/H-Si_data.csv'  # data file
+
+    # m is in eV, d_m_e is dimensionless
+    # both are the log10 of their real values
+    import csv
+    m, d_m_e = [], []
+    with open(fname) as csvfile:
+        reader = csv.reader(csvfile, quoting=csv.QUOTE_NONNUMERIC)
+        for row in reader:
+            m.append(row[0])
+            d_m_e.append(row[1])
+
+    # These are log10 their actual values
+    m = np.pow(10, m)
+    d_m_e = np.pow(10, d_m_e)
+
+    # Convert to our M_eff
+    M_eff = np.sqrt(2) * Mpl / d_m_e
+    return m, M_eff
+
+def HSi_amplitude():
+    """ Generalized amplitude measurement from the H/Si bounds.
+    Converts from the Meff bound to our generalized signal
+        delta mu / mu = A / w cos(w t)
+    Returns the frequency f and corresponding A values.
+    Both are in units of s^-1
+    """
+    m, M_eff = HSi_ULDM()
+    
+    f = m / (2*PI)
+    A = np.sqrt(2 * rho_DM_local) / M_eff
+
+    # Convert to s^-1
+    f *= c / hbar
+    A *= c / hbar
+
+    return f, A
+
