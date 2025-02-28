@@ -65,13 +65,12 @@ def planck(w):
 def DM_CMB(m):
     return m < 1e-24
 
-def HSi_ULDM():
-    """ H/Si clock bounds
-    https://arxiv.org/pdf/2008.08773
-    Converts to our M_eff coupling.  Returns an array of m values,
-    and an array of the corresponding M_eff values that are the bound.
+
+def load_amplitude_helper(fname):
     """
-    fname = 'theory/H-Si_data.csv'  # data file
+    Load a .csv file of m, d_m_e values.
+    Convert to M_eff.
+    """
 
     # m is in eV, d_m_e is dimensionless
     # both are the log10 of their real values
@@ -91,14 +90,13 @@ def HSi_ULDM():
     M_eff = np.sqrt(2) * Mpl / d_m_e
     return m, M_eff
 
-def HSi_amplitude():
-    """ Generalized amplitude measurement from the H/Si bounds.
-    Converts from the Meff bound to our generalized signal
+def Meff_to_amplitude(m, M_eff):
+    """ Generalized amplitude measurement bounds 
+    Converts from the m, Meff bound to our generalized signal
         delta mu / mu = A / w cos(w t)
     Returns the frequency f and corresponding A values.
     Both are in units of s^-1
     """
-    m, M_eff = HSi_ULDM()
     
     f = m / (2*PI)
     A = np.sqrt(2 * rho_DM_local) / M_eff
@@ -108,4 +106,32 @@ def HSi_amplitude():
     A *= c / hbar
 
     return f, A
+
+def HSi_ULDM():
+    """ H/Si clock bounds
+    https://arxiv.org/pdf/2008.08773
+    Converts to our M_eff coupling.  Returns an array of m values,
+    and an array of the corresponding M_eff values that are the bound.
+    """
+    return load_amplitude_helper('theory/H_Si.csv')
+
+def HSi_amplitude():
+    """
+    Converts H/Si bound to frequency and amplitude bounds.
+    """
+    m, M_eff = HSi_ULDM()
+    return Meff_to_amplitude(m, M_eff)
+
+def YbCs_ULDM():
+    """ https://arxiv.org/pdf/2212.05721 """
+    return load_amplitude_helper('theory/Yb_Cs.csv')
+
+def YbCs_amplitude():
+    m, M_eff = YbCs_ULDM()
+    return Meff_to_amplitude(m, M_eff)
+
+
+def NANOGrav_ULDM():
+    """ https://arxiv.org/abs/2306.16219 """
+    return load_amplitude_helper('theory/NANOGrav.csv')
 

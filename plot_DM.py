@@ -56,21 +56,48 @@ def clock_bound_ULDM(clocks, color):
 
     x,y = np.log10(m), np.log10(M / Mpl)
 
-    # Add points to the ends so the outline covers the sides
-    # This looks better than plt.vlines(),
-    # as it takes care of the corners
-    x = np.concatenate( ([x[0]], x, [x[-1]]) )
-    y = np.concatenate( ([0], y, [0]) )
-
-    plt.plot(x, y, color=color)
-    plt.fill_between(x, 0, y, alpha=0.3, color=color)
+    if clocks == 'Sherrill':
+        po.shade_below(x, y, color=color, alpha=0.3, boundary=False)
+    else:
+        po.shade_below(x, y, color=color, alpha=0.3)
     return
+
+
+# Yb/Cs
+x, y = bounds.YbCs_ULDM()
+x = np.log10(x)
+y = np.log10(y / Mpl)
+po.shade_below(x, y, 'purple', boundary=False, alpha=0.5)
+plt.text(-21.1, 5.25, "Yb/Cs", fontsize=8, ha='center')
+#plt.text(-21, 4.85, "(Kobayashi\net al)", fontsize=6, ha='center')
+
+# H/Si clocks
+x, y = bounds.HSi_ULDM()
+x = np.log10(x)
+y = np.log10(y / Mpl)
+
+po.shade_below(x, y, 'forestgreen', boundary=False, alpha=0.5)
+
+plt.text(-19.9, 4, "Sr/H/Si", fontsize=8, ha='center')
+
+# NANOGrav
+x, y = bounds.NANOGrav_ULDM()
+x = np.log10(x)
+y = np.log10(y / Mpl)
+po.shade_below(x, y, 'darkblue', boundary=False, alpha=0.5)
+plt.text(-23.1, 6, "NANOGrav", fontsize=8, ha='center')
 
 # Clocks
 clock_bound_ULDM('CaF/Sr', po.colorcycle[0])
 clock_bound_ULDM('Cs/Sr', po.colorcycle[1])
-
 clock_bound_ULDM('Sherrill', 'purple')
+
+# Text labels for clocks
+plt.text(-22, 7.5, "CaF/Sr clocks", fontsize=10, rotation=-34)
+plt.text(-22, 6.35, "Cs/Sr clocks", fontsize=10, rotation=-34)
+plt.text(-18.55, 4.25, 'Yb/Cs', ha='center', fontsize=8)
+#plt.text(-18.55, 4.1, '(Sherrill et al)', ha='center', fontsize=6)
+
 
 # CMB
 col = 'brown'
@@ -80,25 +107,7 @@ plt.contourf(X, Y, Z, levels = [0.5, 1], alpha = 0.3, colors=col)
 
 plt.text(-24.25, 6, r'CMB & LSS', rotation='vertical', fontsize=8)
 
-# H/Si clocks
-x, y = bounds.HSi_ULDM()
-x = np.log10(x)
-y = np.log10(y / Mpl)
 
-x = np.concatenate( ([x[0]], x, [x[-1]]) )
-y = np.concatenate( ([0], y, [0]) )
-
-col = 'forestgreen'
-plt.plot(x, y, color=col)
-plt.fill_between(x, -100, y, color=col, alpha=0.3)
-
-plt.text(-20.2, 4, "Sr/H/Si\nclocks", fontsize=8, ha='center')
-
-
-# Text labels for clocks
-plt.text(-22, 7.5, "CaF/Sr clocks", fontsize=10, rotation=-34)
-plt.text(-22, 6.35, "Cs/Sr clocks", fontsize=10, rotation=-34)
-plt.text(-18.65, 4.25, 'Yb/Cs\nclocks', ha='center', fontsize=8)
 
 # Microscope
 col = 'gray'
@@ -178,11 +187,10 @@ def draw_raw_clock_bound(clocks, color):
     x = np.log10(f_vals)
     y = np.log10(A_vals)
 
-    x = np.concatenate( ([x[0]], x, [x[-1]]) )
-    y = np.concatenate( ([0], y, [0]) )
-
-    plt.plot(x, y, color=color)
-    plt.fill_between(x, y, 0, alpha=0.3, color=color)
+    if clocks == 'Sherrill':
+        po.shade_above(x, y, color, alpha=0.3, boundary=False)
+    else:
+        po.shade_above(x, y, color, alpha=0.3)
     return
 
 # Clock bounds
@@ -192,21 +200,25 @@ draw_raw_clock_bound('Sherrill', 'purple')
 
 plt.text(-7.5, -23.35, "CaF/Sr clocks", fontsize=10, rotation=17)
 plt.text(-7.5, -22.1, "Cs/Sr clocks", fontsize=10, rotation=17)
-plt.text(-4, -19.15, 'Yb/Cs\nclocks', ha='center', fontsize=8)
+plt.text(-4, -19.15, 'Yb/Cs', ha='center', fontsize=8)
+
+
+# Yb/Cs bounds
+x, y = bounds.YbCs_amplitude()
+x = np.log10(x)
+y = np.log10(y)
+
+po.shade_above(x, y, 'purple', boundary=False)
+plt.text(-6.9, -19, "Yb/Cs", fontsize=8, ha='center')
+#plt.text(-7, -19.3, "Kobayashi et al", fontsize=6, ha='center')
 
 # H/Si bounds
 x, y = bounds.HSi_amplitude()
 x = np.log10(x)
 y = np.log10(y)
 
-x = np.concatenate( ([x[0]], x, [x[-1]]) )
-y = np.concatenate( ([0], y, [0]) )
-
-col = 'forestgreen'
-plt.plot(x, y, color=col)
-plt.fill_between(x, y, 100, color=col, alpha=0.3)
-
-plt.text(-5.75, -19, "Sr/H/Si\nclocks", fontsize=8, ha='center')
+po.shade_above(x, y, 'forestgreen', boundary=False)
+plt.text(-5.5, -18.5, "Sr/H/Si", fontsize=8, ha='center')
 
 # Labels etc
 plt.text(-2.72, -18, r"$f = (10~\mathrm{min})^{-1}$",
@@ -228,4 +240,4 @@ plt.text(x_pos, -15.65, "Dark Matter Signal",
 
 plt.savefig("plots/DM_A_vs_f.png", dpi=po.dpi_setting)
 
-#plt.show()
+plt.show()
