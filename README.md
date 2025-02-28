@@ -27,7 +27,13 @@ The estimated parameters are then used to derive constraints for the proposed ph
 # Installation
 
 To install, clone this repository.  It is recommended to also set up
-a python virtual environment to ensure package compatibility. The first step is to initialize a virtual environment:
+a python virtual environment to ensure package compatibility. This has been automated with a makefile recipe: simply run
+```
+> make init
+```
+and the environment is set up in venv/ and is ready to use.
+
+If a manual setup is preferred, the first step is to initialize a new virtual environment:
 ```
 > python3 -m venv venv
 ```
@@ -36,10 +42,6 @@ and populate it with the packages from the requirements list:
 ```
 > source venv/bin/activate
 > pip install -r requirements.txt
-```
-Optionally, one could instead use a makefile recipe automating these steps which has been included for convenience:
-```
-> make init
 ```
 
 # Usage
@@ -54,7 +56,7 @@ A makefile recipe is included to facilitate generating plots, as well as a few o
 ```
 > make plots -j3
 ```
-The `j3` flag is optional; it makes the plotting scripts run in parallel.
+The `-j3` flag is optional; it makes the plotting scripts run in parallel.
 The plot-generation scripts can also be run individually, if desired, e.g.
 ```
 > python plot_MG.py
