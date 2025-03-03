@@ -67,7 +67,7 @@ def clock_bound_ULDM(clocks, color):
 x, y = bounds.YbCs_ULDM()
 x = np.log10(x)
 y = np.log10(y / Mpl)
-po.shade_below(x, y, 'purple', boundary=False, alpha=0.5)
+po.shade_below(x, y, 'purple', boundary=False, alpha=0.3)
 plt.text(-21.1, 5.25, "Yb/Cs", fontsize=8, ha='center')
 #plt.text(-21, 4.85, "(Kobayashi\net al)", fontsize=6, ha='center')
 
@@ -76,7 +76,7 @@ x, y = bounds.HSi_ULDM()
 x = np.log10(x)
 y = np.log10(y / Mpl)
 
-po.shade_below(x, y, 'forestgreen', boundary=False, alpha=0.5)
+po.shade_below(x, y, 'forestgreen', boundary=False, alpha=0.3)
 
 plt.text(-19.9, 4, "Sr/H/Si", fontsize=8, ha='center')
 
@@ -84,7 +84,7 @@ plt.text(-19.9, 4, "Sr/H/Si", fontsize=8, ha='center')
 x, y = bounds.NANOGrav_ULDM()
 x = np.log10(x)
 y = np.log10(y / Mpl)
-po.shade_below(x, y, 'darkblue', boundary=False, alpha=0.5)
+po.shade_below(x, y, 'darkblue', boundary=False, alpha=0.3)
 plt.text(-23.1, 6, "NANOGrav", fontsize=8, ha='center')
 
 # Clocks
