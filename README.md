@@ -89,7 +89,9 @@ The plot-generation scripts can also be run individually, if desired, e.g.
 ```
 
 # Requirements
-This package has been tested with python version 3.13.2 with the packages pip and venv.  Optionally GNU make may be used to automate certain tasks.  All other dependencies are added during the installation process.
+- Python v3.13.2 and up, with the packages pip and venv
+- GNU Make v4.4+ (optional, used to automate some tasks)
+- All other dependencies are added during the installation process.
 
 # Authors
 
