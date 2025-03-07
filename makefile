@@ -1,5 +1,6 @@
 # Implements some helpful procedures for generating and cleaning up
 # files.
+# Requires GNU Make v4.4 or greater
 
 .PHONY: init plots requirements clean plot_MG plot_DE plot_DM stats
 
@@ -36,7 +37,6 @@ plot_DM:
 
 # Run with the -j3 flag to run these in parallel
 plots: plot_MG plot_DE plot_DM
-	@echo "Starting plots..."
 	@echo "Done with plots"
 
 requirements:
