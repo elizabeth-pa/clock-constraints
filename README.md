@@ -89,7 +89,7 @@ The plot-generation scripts can also be run individually, if desired, e.g.
 ```
 
 # Requirements
-- Python v3.13.2+, with the packages pip and venv
+- Python v3.13, with the packages pip and venv
 - GNU Make v4.4+ (optional, used to automate some tasks)
 - All other dependencies are added during the installation process.
 

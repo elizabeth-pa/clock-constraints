@@ -19,7 +19,7 @@ all: stats .WAIT plots
 
 init:
 	python3.13 -m venv $(VENV)
-	$(VENV)/bin/pip install -r requirements.txt
+	$(PIP) install -r requirements.txt
 
 stats:
 	@echo "Starting stats..."

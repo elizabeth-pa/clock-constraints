@@ -215,5 +215,5 @@ def save_sigmas_to_csv(col_names=['sigma_A_MOD','sigma_A_DE','sigma_A_DM'], whic
     return 
 
 if __name__ == "__main__":
-    # save_sigmas_to_csv(which_clocks=couples_list)
-    plotter_wrapper(which='DM')
+    save_sigmas_to_csv(which_clocks=couples_list)
+    # plotter_wrapper(which='DM')
