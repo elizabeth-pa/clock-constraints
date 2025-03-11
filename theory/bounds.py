@@ -59,6 +59,7 @@ def microscope(M, M_e, dphi):
 
     return eta < out
 
+
 def LLR(M, L):
     """ Lunar laser ranging bound on the cubic galileon
     As described in 1407.0059 """
@@ -77,6 +78,29 @@ def rV3(M, L, M_obj):
 def rV4(M, L, M_obj, c4):
     """ Quartic Vainshtein radius """
     return (c4/2)**(1/6.) * rV3(M, L, M_obj)
+
+delta_phi_LLR = 2.4e-11
+def LLR3(M, L):
+    """ Lunar laser ranging bound for cubic galileon.
+    Described in 1106.1573 """ 
+    m = earth_mass
+    R = earth_moon_distance
+    dphi = delta_phi_LLR
+
+    rhs = 3*PI/2 * Mpl**2 * (8*PI * L**3 * R**3 /(m * M**3))**0.5
+    return dphi < rhs
+
+def LLR4(M, L, c4):
+    """ LLR quartic galileon """
+    m = earth_mass
+    R = earth_moon_distance
+    dphi = delta_phi_LLR
+
+    rhs = 2*PI * Mpl**2 * L**2
+    rhs *= ((8*PI)**2 / (c4 * M**4 * m**2))**(1/3.) * R**2
+    return dphi < rhs
+
+
 
 
 def planck(w):
