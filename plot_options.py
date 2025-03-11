@@ -14,7 +14,7 @@ import numpy as np
 # Around 1k looks ok and is fast.
 # Set this to a high value (~10k) for the final versions
 # of the plots.
-resolution = 1000
+resolution = 10000
 
 # Color scheme
 colorcycle = plt.rcParams['axes.prop_cycle'].by_key()['color']

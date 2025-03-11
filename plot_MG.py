@@ -228,4 +228,4 @@ plt.ylabel(r"$\alpha$", fontsize=12)
 
 plt.savefig("plots/MG_gen_alpha_vs_beta.png", dpi=po.dpi_setting)
 
-plt.show()
+#plt.show()

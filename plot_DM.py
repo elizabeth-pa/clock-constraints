@@ -240,4 +240,4 @@ plt.text(x_pos, -15.65, "Dark Matter Signal",
 
 plt.savefig("plots/DM_A_vs_f.png", dpi=po.dpi_setting)
 
-plt.show()
+#plt.show()
