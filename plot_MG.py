@@ -81,11 +81,27 @@ Z4 = bounds.microscope(M, np.inf, dp)
 Z = Z2 & Z3 & Z4
 
 col = 'gray'
-plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
+#plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
 plt.contourf(X, Y, Z, levels=[0.5, 1], colors=col, alpha=0.3)
 plt.text(np.log10(5e-4), np.log10(8e4),
          "Microscope", va = "center", fontsize = 8)
 
+# LLR
+Z1 = bounds.LLR(M, Lambda)
+rV3 = bounds.rV3(M, Lambda, earth_mass)
+rV4 = bounds.rV4(M, Lambda, earth_mass, c4)
+
+Z2 = earth_moon_distance < rV3
+Z3 = earth_moon_distance > rV4**4 / rV3**3
+
+Z = Z1 & Z2 & Z3
+
+col = 'gray'
+#plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
+plt.contourf(X, Y, Z, levels=[0.5, 1], colors=col, alpha=0.3)
+
+plt.text(-6.85, 4.5,
+         "LLR", va = "center", fontsize = 8)
 
 # Styling
 plt.tick_params( direction = 'in' )
@@ -110,11 +126,11 @@ plt.text(-13.45, -2, r"$m_\mathrm{g} = H_0$", fontsize=8, rotation='vertical')
 # Labels of Vainshtein regions
 plt.text(np.log10(1e-2), np.log10(8.5e3),
          r"$R_{\rm V3} < {\rm AU}$", fontsize = 6)
-plt.text(np.log10(1.5e-10), np.log10(1e1),
-         r"$R_{\rm V4} < {\rm AU} < R_{\rm V3}$",
-         fontsize = 6, rotation = 54)
-plt.text(-14.9, -5, r"${\rm AU} < R_{\rm V4}$",
-         fontsize = 6, rotation = 67)
+plt.text(-9.925, 1,
+         r"$R_{\rm V4}^4 / R_{\rm V3}^3 < {\rm AU} < R_{\rm V3}$",
+         fontsize = 6, rotation = 53)
+plt.text(-14.92, -5, r"${\rm AU} < R_{\rm V4}^4 / R_{\rm V3}^3$",
+         fontsize = 6, rotation = 66)
 
 plt.xlabel(r'$\log_{10} \Lambda ~/~ \mathrm{eV}$', fontsize=12)
 plt.ylabel(r'$\log_{10} M ~/~ M_\mathrm{Pl}$', fontsize=12)
@@ -212,4 +228,4 @@ plt.ylabel(r"$\alpha$", fontsize=12)
 
 plt.savefig("plots/MG_gen_alpha_vs_beta.png", dpi=po.dpi_setting)
 
-#plt.show()
+plt.show()

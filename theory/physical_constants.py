@@ -32,6 +32,8 @@ solar_mass = 2e33 * g_to_eV
 earth_mass = 1.7e28 * g_to_eV
 earth_eccentricity = 0.0167
 
+earth_moon_distance = 3.84e10 / hbar
+
 ### Cosmology ###
 Lambda_DE = 2.4e-3  # eV
 rho_DE = Lambda_DE**4.  # all densities are in eV^4
