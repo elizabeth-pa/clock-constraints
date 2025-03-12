@@ -67,7 +67,7 @@ A makefile recipe is included to facilitate generating plots, as well as a few o
 ```
 > make -j3
 ```
-The `-j3` flag is optional; it makes the plotting scripts run in parallel.  This first generates a simulated signal using the supplied clock parameters, and then undertakes a signal extraction for the generalized signals associated with dark energy, dark matter, and modified gravity.  Finally it generates constraint plots for specific theories.  The statistical analysis need only be run once, thereafter that step can be skipped via the command
+The `-j3` flag is optional; it makes the plotting scripts run in parallel.  This first generates a simulated signal using the supplied clock parameters, and then undertakes a signal extraction for the generalized signals associated with dark energy, dark matter, and modified gravity and stores the result in sigmas.csv.  Finally it generates constraint plots for specific theories.  The statistical analysis need only be run once for a given set of clock parameters, thereafter that step can be skipped by using the command
 ```
 > make plots -j3
 ```
