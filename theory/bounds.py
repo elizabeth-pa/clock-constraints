@@ -10,6 +10,7 @@ import numpy as np
 
 # This expects to be run from the parent folder, i.e. in plot_DE.py etc
 from theory.physical_constants import *
+import theory.field_solutions as solutions
 
 microscope_eta = np.sqrt(2.3**2 + 1.5**2) * 1e-15
 microscope_r = 7000 * 1e5 / hbar
@@ -100,7 +101,15 @@ def LLR4(M, L, c4):
     rhs *= ((8*PI)**2 / (c4 * M**4 * m**2))**(1/3.) * R**2
     return dphi < rhs
 
+def LLR_generalized(M, L, a, b):
+    """ LLR bound, generalized interaction model """
+    m = earth_mass
+    R = earth_moon_distance
+    dphi = delta_phi_LLR
 
+    rhs = PI * (2 - b) * (Mpl / M)**2
+    rhs *= (m / (8*PI*M))**(a-1) * (L*R)**(2-b)
+    return dphi < rhs
 
 
 def planck(w):

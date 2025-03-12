@@ -87,16 +87,6 @@ plt.text(np.log10(5e-4), np.log10(8e4),
          "Microscope", va = "center", fontsize = 8)
 
 # LLR
-'''
-Z1 = bounds.LLR(M, Lambda)
-rV3 = bounds.rV3(M, Lambda, earth_mass)
-rV4 = bounds.rV4(M, Lambda, earth_mass, c4)
-
-Z2 = earth_moon_distance < rV3
-Z3 = earth_moon_distance > rV4**4 / rV3**3
-
-Z = Z1 & Z2 & Z3
-'''
 
 Z1 = bounds.LLR3(M, Lambda)
 Z2 = bounds.LLR4(M, Lambda, c4)
@@ -195,6 +185,14 @@ plt.contourf(X, Y, Z, levels=[0.5, 1], colors=col, alpha=0.3)
 
 plt.text(1.7, 0.665, "Microscope", rotation=12.5, fontsize = 8)
 
+## Generalized model
+
+Z = bounds.LLR_generalized(M, Lambda, alphas, betas)
+col = 'gray'
+#plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
+plt.contourf(X, Y, Z, levels=[0.5, 1], colors=col, alpha=0.3)
+
+
 ## Clocks
 
 # We can reuse the same field gradient function dp(m, r) that was used for 
@@ -238,4 +236,4 @@ plt.ylabel(r"$\alpha$", fontsize=12)
 
 plt.savefig("plots/MG_gen_alpha_vs_beta.png", dpi=po.dpi_setting)
 
-#plt.show()
+plt.show()
