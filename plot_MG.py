@@ -180,17 +180,19 @@ Lambda = 1e-10
 dp = lambda m, r: dphi.generalized(m, r, M, Lambda, alphas, betas)
 Z = bounds.microscope(M, np.inf, dp)
 col = 'gray'
-plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
+#plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
 plt.contourf(X, Y, Z, levels=[0.5, 1], colors=col, alpha=0.3)
 
-plt.text(1.7, 0.665, "Microscope", rotation=12.5, fontsize = 8)
+plt.text(1.5, 0.64, "Microscope", rotation=12.5, fontsize = 8)
 
-## Generalized model
+## Lunar laser ranging
 
 Z = bounds.LLR_generalized(M, Lambda, alphas, betas)
 col = 'gray'
 #plt.contour(X, Y, Z, levels=[0.5], colors=col, linestyles='dashed')
 plt.contourf(X, Y, Z, levels=[0.5, 1], colors=col, alpha=0.3)
+
+plt.text(1.25, 0.55, "LLR", rotation=14, fontsize = 8)
 
 
 ## Clocks
@@ -236,4 +238,4 @@ plt.ylabel(r"$\alpha$", fontsize=12)
 
 plt.savefig("plots/MG_gen_alpha_vs_beta.png", dpi=po.dpi_setting)
 
-plt.show()
+#plt.show()

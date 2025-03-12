@@ -45,4 +45,5 @@ requirements:
 
 clean:
 	rm plots/*.png
+	#rm stats/sigmas.csv
 
