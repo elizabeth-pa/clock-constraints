@@ -28,7 +28,7 @@ def clock_bound(M, dphi):
     """
     A = mc.MG_max_amplitude('CaF/Sr')   # dimensionless
 
-    M_obj = solar_mass
+    M_obj = solar_mass * 1e-3
     r = AU
     e = earth_eccentricity
 
@@ -39,7 +39,6 @@ def clock_bound(M, dphi):
 
 ### Galileon ###
 plt.figure(1, figsize=po.figsize)
-
 xmin, xmax = -16, 0
 X, Y = np.meshgrid(
         np.linspace(xmin, xmax, po.resolution),
