@@ -11,7 +11,7 @@ This project is designed to generate simulated data based on the characteristics
 # How It Works
 
 ## Data Generation
-We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values used by the customers should be put in table stats/clock_pars.csv in the form of h0, and h-1 coefficients, according to the conversion from the Allen variance explained in https://en.wikipedia.org/wiki/Allan_variance. Then pdate the couples of clocks used in the table stats/clock_pars.csv and you will be ready to run the data generation and analysis!
+We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values used by the customers should be put in table stats/clock_pars.csv in the form of h0, and h-1 coefficients, according to the conversion from the Allan variance explained in https://en.wikipedia.org/wiki/Allan_variance. Then pdate the couples of clocks used in the table stats/clock_pars.csv and you will be ready to run the data generation and analysis!
 Firstly, you generate in frequency domain the simulated noise, given the two clocks noise contributions considered.
 
 ## Signal Injection
