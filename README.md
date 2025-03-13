@@ -76,7 +76,7 @@ The data analysis runs a Markov Chain Monte Carlo (MCMC) Bayesian analysis on th
 3) The statistics of the posterior distribution is obtained, outputting the forecast posterior uncertainty of the overall amplitude of the simulated signal (which is one of the theoretical parameters employed). The analysis is run for each of the three phenomenological models and each of the provided clock pairs. The numerical values of the forecast uncertainties are stored in `stats/sigmas.csv`.
 4) Constraint plots for specific dark energy, dark matter, and modified gravity theories are generated and stored in the `plots/` directory.
 
-Since the statistical analysis need only be run once for a given set of clock parameters, that step can be skipped by using the command
+The statistical analysis need only be run once for a given set of clock parameters.  Thereafter it can be skipped by using the command
 ```
 > make plots -j3
 ```
