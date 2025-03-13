@@ -23,7 +23,7 @@ init:
 
 stats:
 	@echo "Starting stats..."
-	$(PYTHON) stats/data_to_model.py
+	$(PYTHON) sigmas_updater.py
 	@echo "Done with stats"
 
 plot_MG:
@@ -45,5 +45,5 @@ requirements:
 
 clean:
 	rm plots/*.png
-	#rm stats/sigmas.csv
+	rm stats/sigmas.csv
 
