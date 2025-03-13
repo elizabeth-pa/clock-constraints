@@ -1,4 +1,4 @@
-import utils
+from stats import utils
 
 import numpy as np
 import pandas as pd
@@ -211,9 +211,6 @@ def save_sigmas_to_csv(col_names=['sigma_A_MOD','sigma_A_DE','sigma_A_DM'], whic
     df = pd.DataFrame(tab_out, index=row_names, columns=col_names)
     df.index.name = 'Clock_pair'
     
-    df.to_csv('sigmas.csv')
-    return 
+    df.to_csv('stats/sigmas.csv')
+    return
 
-if __name__ == "__main__":
-    save_sigmas_to_csv(which_clocks=couples_list)
-    # plotter_wrapper(which='DM')
