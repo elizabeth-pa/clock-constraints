@@ -67,7 +67,13 @@ A makefile recipe is included to facilitate generating plots, as well as a few o
 ```
 > make -j3
 ```
-The `-j3` flag is optional; it makes the plotting scripts run in parallel.  This first generates a simulated signal using the supplied clock parameters, and then undertakes a signal extraction for the generalized signals associated with dark energy, dark matter, and modified gravity and stores the result in sigmas.csv.  Finally it generates constraint plots for specific theories.  The statistical analysis need only be run once for a given set of clock parameters, thereafter that step can be skipped by using the command
+The `-j3` flag is optional; it makes the plotting scripts run in parallel. This also runs the full data analyisis forecast which consists of the following steps.
+First, a simulated realization of the noise datastream is generated using the supplied clock parameters, which have to be updated by the user in the stats/clocks_pars.csv file, and the couples of clocks considered, which can be edited in stats/clocks_couples.csv.
+Then a realization of the forecast signal from the generalized theoretical models associated with dark energy, dark matter, and modified gravity is added to the datastream. The models considered are reported in stats/utils.py and if the user wishes to forecast a different one, the structure of the forecast allows them to do so.
+The data analysis runs a Markov Chain Monte Carlo (MCMC) Bayesian analysis on the parameters of the models considered, producing samples distributed as the posterior distribution of the parameters.
+Finally, the statistics of the posterior distribution is obtained, outputing the forecast posterior uncertainty of the overall amplitude of the signal (which is one of the theoretical parameters employed). The analysis is run for each of the three theoretical models and each of the clock couples considered and the numerical values of the forecast uncertainties are stored in stats/sigmas.csv.
+After the stats/sigmas.csv, the constraint plots for the three theories considered are generated.
+Since the statistical analysis need only be run once for a given set of clock parameters, that step can be skipped by using the command
 ```
 > make plots -j3
 ```
