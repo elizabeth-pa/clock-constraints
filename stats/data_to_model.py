@@ -7,7 +7,26 @@ from scipy.integrate import simpson as simps
 import matplotlib.pyplot as plt
 import corner
 
-noise_pars_list=pd.read_csv('stats/clocks_pars.csv')
+noise_pars_list_import=pd.read_csv('stats/clocks_pars.csv')
+
+# The following converts instability and accuracy to h0 and hm1
+
+def h0_from_instability(sigma): # converts Allan variance for instability to h0 white noise
+    return 2* sigma**2
+
+def hm1_from_accuracy(sigma): # converts Allan variance for accuracy to hm1 pink noise
+    return sigma**2 / (2*np.log(2))
+
+def instability_from_h0(h0): # converts h0 white noise to Allan variance for instability
+    return np.sqrt(h0/2)
+
+def accuracy_from_hm1(hm1): # converts hm1 pink noise to Allan variance for accuracy
+    return np.sqrt(hm1*(2*np.log(2)))
+
+noise_pars_list=pd.DataFrame(noise_pars_list_import['Clock_name'])
+noise_pars_list['h0']=h0_from_instability(noise_pars_list_import['instability'])
+noise_pars_list['hm1']=hm1_from_accuracy(noise_pars_list_import['accuracy'])
+noise_pars_list['K']=noise_pars_list_import['K']
 
 couples_list=np.genfromtxt('stats/clocks_couples.csv', delimiter='/', dtype=str)
 
