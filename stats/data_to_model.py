@@ -7,7 +7,7 @@ from scipy.integrate import simpson as simps
 import matplotlib.pyplot as plt
 import corner
 
-noise_pars_list_import=pd.read_csv('stats/clocks_pars.csv')
+noise_pars_list_import=pd.read_csv('stats/clocks_parameters.csv')
 
 # The following converts instability and accuracy to h0 and hm1
 
@@ -28,7 +28,7 @@ noise_pars_list['h0']=h0_from_instability(noise_pars_list_import['instability'])
 noise_pars_list['hm1']=hm1_from_accuracy(noise_pars_list_import['accuracy'])
 noise_pars_list['K']=noise_pars_list_import['K']
 
-couples_list=np.genfromtxt('stats/clocks_couples.csv', delimiter='/', dtype=str)
+couples_list=np.genfromtxt('stats/clocks_pairs.csv', delimiter='/', dtype=str)
 
 
 def noise_pars_wrap(idx,which_clocks=couples_list):
@@ -218,7 +218,7 @@ def sigmas_table(which_clocks=couples_list):
 
 def save_sigmas_to_csv(col_names=['sigma_A_MOD','sigma_A_DE','sigma_A_DM'], which_clocks=couples_list):
     '''
-    Saves the value computed by sigmas_table of the forecast errors in the table sigmas.csv
+    Saves the value computed by sigmas_table of the forecast errors in the table sigma_A_table.csv
     '''
 
     row_names=[]
@@ -230,6 +230,6 @@ def save_sigmas_to_csv(col_names=['sigma_A_MOD','sigma_A_DE','sigma_A_DM'], whic
     df = pd.DataFrame(tab_out, index=row_names, columns=col_names)
     df.index.name = 'Clock_pair'
     
-    df.to_csv('stats/sigmas.csv')
+    df.to_csv('stats/sigma_A_table.csv')
     return
 

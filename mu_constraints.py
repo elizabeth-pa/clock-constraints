@@ -28,7 +28,7 @@ def DE_max_amplitude(clock_pair):
     Input:
         clock_pair: Name of a particular clock pair
     """
-    file_path = "stats/sigmas.csv"
+    file_path = "stats/sigma_A_table.csv"
     
     try:
         df = pd.read_csv(file_path)
@@ -67,13 +67,13 @@ def DM_max_amplitude(clock_pair, nPoints = 100):
     w_min = 2*PI / (3*T_year)     # 3 years
     w_max = 2*PI / 600     # 10 min
 
-    w_ref = 2*PI / (3*T_year)     # year, reference value for sigmas.csv file
+    w_ref = 2*PI / (3*T_year)     # year, reference value for sigma_A_table.csv file
         
     # Values logarithmically spaced between w_min and w_max
     w_vals = np.logspace(np.log10(w_min),
                          np.log10(w_max), nPoints)
     
-    file_path = "stats/sigmas.csv"
+    file_path = "stats/sigma_A_table.csv"
     
     try:
         df = pd.read_csv(file_path)
@@ -87,7 +87,7 @@ def DM_max_amplitude(clock_pair, nPoints = 100):
 
     clock_couple=clock_pair.split('/')
 
-    noise_pars_list=pd.read_csv('stats/clocks_pars.csv')
+    noise_pars_list=pd.read_csv('stats/clocks_parameters.csv')
 
     row1 = noise_pars_list.loc[noise_pars_list['Clock_name'] == clock_couple[0]].iloc[0, 1:].tolist()
     row2 = noise_pars_list.loc[noise_pars_list['Clock_name'] == clock_couple[1]].iloc[0, 1:].tolist()
@@ -110,7 +110,7 @@ def MG_max_amplitude(clock_pair):
     Returns A for the given clock pair.
     """
 
-    file_path = "stats/sigmas.csv"
+    file_path = "stats/sigma_A_table.csv"
     
     try:
         df = pd.read_csv(file_path)
