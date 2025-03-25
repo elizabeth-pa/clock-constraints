@@ -85,6 +85,9 @@ The plot-generation scripts can also be run individually if desired via e.g.
 > python plot_MG.py
 ```
 
+# Adding a clock pair
+TO DO: walk through an example of adding a new clock pair.  Which files to edit, what to run, what is returned.
+
 # Clock pair API
 TO DO: describe the interface between the stats and theory sections.
 
