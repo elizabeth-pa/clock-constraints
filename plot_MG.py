@@ -125,11 +125,11 @@ plt.text(-13.45, -2, r"$m_\mathrm{g} = H_0$", fontsize=8, rotation='vertical')
 
 # Labels of Vainshtein regions
 plt.text(np.log10(1e-2), np.log10(8.5e3),
-         r"$R_{\rm V3} < {\rm AU}$", fontsize = 6)
+         r"$R_3 < {\rm AU}$", fontsize = 6)
 plt.text(-9.925, 1,
-         r"$R_{\rm V4}^4 / R_{\rm V3}^3 < {\rm AU} < R_{\rm V3}$",
+         r"$R_4^4 / R_3^3 < {\rm AU} < R_3$",
          fontsize = 6, rotation = 53)
-plt.text(-14.92, -5, r"${\rm AU} < R_{\rm V4}^4 / R_{\rm V3}^3$",
+plt.text(-14.92, -5, r"${\rm AU} < R_4^4 / R_3^3$",
          fontsize = 6, rotation = 66)
 
 plt.xlabel(r'$\log_{10} \Lambda ~/~ \mathrm{eV}$', fontsize=12)
