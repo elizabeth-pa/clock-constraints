@@ -43,7 +43,7 @@ a python virtual environment to ensure package compatibility. This has been auto
 ```
 > make init
 ```
-and the environment is set up in venv/ and is ready to use.
+and the environment is set up in `venv/` and is ready to use.
 
 If a manual setup is preferred, the first step is to initialize a new virtual environment:
 ```
