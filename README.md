@@ -11,8 +11,8 @@ This software generates simulated data based on the characteristics of atomic cl
 # How It Works
 
 ## Data Generation
-We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values are supplied via the table stats/clocks_parameters.csv in the form of h0, and h-1 coefficients, according to the conversion from the Allan variance explained in https://en.wikipedia.org/wiki/Allan_variance.
-The pairs of clocks that are to be considered are listed in stats/clocks_pairs.csv and you will be ready to run the data generation and analysis!
+We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values are supplied via the table `stats/clocks_parameters.csv` in the form of h0, and h-1 coefficients, according to the conversion from the Allan variance explained in https://en.wikipedia.org/wiki/Allan_variance.
+The pairs of clocks that are to be considered are listed in `stats/clocks_pairs.csv` and you will be ready to run the data generation and analysis!
 Firstly, you generate in frequency domain the simulated noise, given the two clocks noise contributions considered.
 
 ## Signal Injection
@@ -21,11 +21,11 @@ Once the data is generated, we inject the desired signal based on the phenomenol
 2. A Dark-Energy-inspired linear time drift of the relative shift of clocks datastream
 3. A Dark-Matter-inspired sinusoidal time modulation of the relative shift of clocks datastream, with unknown phase, frequency and amplitude
 
-All these functions are present in stats/data_to_model.py and stats/utils.py
+All these functions are present in `stats/data_to_model.py` and `stats/utils.py`
 
 ## Parameter estimation techniques
 Using the injected data, we apply the Markov Chain Monte Carlo (MCMC) and Fisher methods to forecast the reconstruction of the posterior distribution for the parameters of the phenomenological models considered.
-The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in stats/data_to_model.py and stats/utils.py as indicated.
+The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in `stats/data_to_model.py` and stats/utils.py as indicated.
 
 The output of both the MCMC and Fisher methods are a fair set of samples from the posterior distributions of the phenomenological parameters.
 
@@ -34,7 +34,7 @@ In particular, in the table stats/sigmas.csv there are the forecast width of the
 ## Theory Constraints
 The estimated parameters are then used to derive constraints for the proposed physics theories.  The basic signals that are searched for in the data are 1) linear drift, corresponding to dark energy 2) yearly oscillations, corresponding to modified gravity via the Sun-clock interaction and 3) oscillations with arbitrary frequency, corresponding to dark matter, where the oscillation frequency is set by the mass of the dark matter particle.
 
-Those signal amplitudes are computed and stored in stats/sigma_A_table.csv.  For ease of use, there is also an API to simplify programmatic queries of these signals.  This is supplied in mu_constraints.py and is detailed there, with one API call for each of the above three genreral signals.
+Those signal amplitudes are computed and stored in `stats/sigma_A_table.csv`.  For ease of use, there is also an API to simplify programmatic queries of these signals.  This is supplied in `mu_constraints.py` and is detailed there, with one API call for each of the above three genreral signals.
 
 # Installation
 
@@ -49,7 +49,7 @@ If a manual setup is preferred, the first step is to initialize a new virtual en
 ```
 > python3 -m venv venv
 ```
-This creates a venv/ directory.  Next we can activate the environment
+This creates a `venv/` directory.  Next we can activate the environment
 and populate it with the packages from the requirements list:
 ```
 > source venv/bin/activate
@@ -87,37 +87,20 @@ The plot-generation scripts can also be run individually if desired via e.g.
 ```
 
 # Adding a clock pair
-TO DO: walk through an example of adding a new clock pair.  Which files to edit, what to run, what is returned.
-
-# Clock pair API
-TO DO: describe the interface between the stats and theory sections.
-
----
-
-```
-@misc{sfs,
-  author       = {sdv},
-  title        = {sdf},
-  month        = August,
-  year         = 2024,
-  publisher    = {sdfs},
-  version      = {gdr},
-  doi          = {gdfg},
-  howpublished = {\url{dfgvd}}
-}
-```
+To add a new clock pair, supply the clocks characterstics in `stats/clocks_parameters.csv`, and list the desired clock combinations to be considered in `stats/clock_pairs.csv`.  Then run `make` from the command line. This creates (or updates) the uncertainties in the `stats/sigma_A_table.csv` table.
+These can also be queried
+programatically via an API that is detailed in `mu_constraints.py`.
+If desired, one could update the clock names in the various plotting scripts as well (`plot_DE.py` etc) to see the clock pair's constraints on the included plots.
 
 # Requirements
 - Python v3.13, with the packages pip and venv
 - GNU Make v4.4+ (optional, used to automate some tasks)
 - All other dependencies are added during the installation process.
 
-# Authors
-
 # Contact
 
 For more information or to collaborate, please contact:
 
-- **Email**: [your.email@example.com](mailto:your.email@example.com)
-- **GitHub**: [elizabeth-pa](https://github.com/elizabeth-pa)
-- **GitHub**: [bencelder](https://github.com/bencelder)
+- [elizabeth-pa](https://github.com/elizabeth-pa)
+- [gmenta24](https://github.com/gmenta24)
+- [bencelder](https://github.com/bencelder)
