@@ -25,7 +25,7 @@ All these functions are present in `stats/data_to_model.py` and `stats/utils.py`
 
 ## Parameter estimation techniques
 Using the injected data, we apply the Markov Chain Monte Carlo (MCMC) and Fisher methods to forecast the reconstruction of the posterior distribution for the parameters of the phenomenological models considered.
-The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in `stats/data_to_model.py` and stats/utils.py as indicated.
+The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in `stats/data_to_model.py` and `stats/utils.py` as indicated.
 
 The output of both the MCMC and Fisher methods are a fair set of samples from the posterior distributions of the phenomenological parameters.
 
