@@ -2,13 +2,14 @@
 
 This software generates simulated data based on the characteristics of atomic clocks and uses Markov Chain Monte Carlo (MCMC) methods to estimate unknown parameters of various physics models. The results are then used to establish constraints on the proposed theories.
 
-## Project Goals
-- Take atomic clock characteristics e.g. as stability and systematic uncertainty as input.
-- Generate simulated data for different atomic clocks.
-- Inject signals and perform MCMC analysis.
-- Estimate unknown parameters and derive constraints for the theories described below.
-
 # How It Works
+
+In a nutshell, this software does the following:
+
+- Takes atomic clock characteristics e.g. as stability and systematic uncertainty as input.
+- Generates simulated data for different atomic clocks.
+- Injects signals and performs MCMC analysis.
+- Computes projected constraints on specific theories of dark energy, dark matter, and modified gravity (Galileons etc).
 
 ## Data Generation
 We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values are supplied via the table `stats/clocks_parameters.csv` in the form of h0, and h-1 coefficients, according to the conversion from the Allan variance explained in https://en.wikipedia.org/wiki/Allan_variance.
