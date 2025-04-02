@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from theory.physical_constants import *
-import theory.bounds as bounds
-import theory.field_solutions as dphi
+from theory import bounds
+from theory import field_solutions as dphi
 
 import mu_constraints as mc
 import plot_options as po

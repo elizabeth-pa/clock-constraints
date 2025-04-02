@@ -8,9 +8,9 @@
 
 import numpy as np
 
-# This expects to be run from the parent folder, i.e. in plot_DE.py etc
-from theory.physical_constants import *
-import theory.field_solutions as solutions
+# Relative imports within the theory/ package
+from .physical_constants import *
+from . import field_solutions as solutions
 
 microscope_eta = np.sqrt(2.3**2 + 1.5**2) * 1e-15
 microscope_r = 7000 * 1e5 / hbar

@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from theory.physical_constants import *
-import theory.bounds as bounds
+from theory import bounds
 
 import mu_constraints as mc
 import plot_options as po
