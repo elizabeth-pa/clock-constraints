@@ -1,6 +1,6 @@
 # Clock constraints on fundamental physics
 
-This project is designed to generate simulated data based on the characteristics of your atomic clocks and use Markov Chain Monte Carlo (MCMC) methods to estimate unknown parameters of various physics models. The results are then used to establish constraints on the proposed theories.
+This software generates simulated data based on the characteristics of atomic clocks and uses Markov Chain Monte Carlo (MCMC) methods to estimate unknown parameters of various physics models. The results are then used to establish constraints on the proposed theories.
 
 ## Project Goals
 - Take atomic clock characteristics e.g. as stability and systematic uncertainty as input.
@@ -11,7 +11,8 @@ This project is designed to generate simulated data based on the characteristics
 # How It Works
 
 ## Data Generation
-We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values used by the customers should be put in table stats/clock_pars.csv in the form of h0, and h-1 coefficients, according to the conversion from the Allan variance explained in https://en.wikipedia.org/wiki/Allan_variance. Then pdate the couples of clocks used in the table stats/clock_pars.csv and you will be ready to run the data generation and analysis!
+We generate simulated data for atomic clocks based on input characteristics such as stability (white noise) and systematic uncertainty (pink noise). The values are supplied via the table stats/clocks_parameters.csv in the form of h0, and h-1 coefficients, according to the conversion from the Allan variance explained in https://en.wikipedia.org/wiki/Allan_variance.
+The pairs of clocks that are to be considered are listed in stats/clocks_pairs.csv and you will be ready to run the data generation and analysis!
 Firstly, you generate in frequency domain the simulated noise, given the two clocks noise contributions considered.
 
 ## Signal Injection
@@ -24,16 +25,16 @@ All these functions are present in stats/data_to_model.py and stats/utils.py
 
 ## Parameter estimation techniques
 Using the injected data, we apply the Markov Chain Monte Carlo (MCMC) and Fisher methods to forecast the reconstruction of the posterior distribution for the parameters of the phenomenological models considered.
-The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in stats/data_to_model.py and stats/utils.py as indicated
+The code is implemented to run for the three aforementioned phenomenological models, but an external user can provide a different model, provided that they add its functional form in stats/data_to_model.py and stats/utils.py as indicated.
 
 The output of both the MCMC and Fisher methods are a fair set of samples from the posterior distributions of the phenomenological parameters.
 
 In particular, in the table stats/sigmas.csv there are the forecast width of the posterior distribution in the direction of the amplitude of the signal, for each of the three phenomenological models considered, assuming flat prior in the parameters (and after marginalizing in the frequency and phase parameters for the DM-inspired model)
 
 ## Theory Constraints
-The estimated parameters are then used to derive constraints for the proposed physics theories. 
+The estimated parameters are then used to derive constraints for the proposed physics theories.  The basic signals that are searched for in the data are 1) linear drift, corresponding to dark energy 2) yearly oscillations, corresponding to modified gravity via the Sun-clock interaction and 3) oscillations with arbitrary frequency, corresponding to dark matter, where the oscillation frequency is set by the mass of the dark matter particle.
 
-# a few words about the models used?
+Those signal amplitudes are computed and stored in stats/sigma_A_table.csv.  For ease of use, there is also an API to simplify programmatic queries of these signals.  This is supplied in mu_constraints.py and is detailed there, with one API call for each of the above three genreral signals.
 
 # Installation
 
