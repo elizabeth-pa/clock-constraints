@@ -21,7 +21,7 @@ Once the data is generated, we inject the desired signal based on the phenomenol
 2. A Dark-Energy-inspired linear time drift of the relative shift of clocks datastream
 3. A Dark-Matter-inspired sinusoidal time modulation of the relative shift of clocks datastream, with unknown phase, frequency and amplitude
 
-All these functions are present in `stats/data_to_model.py` and `stats/utils.py`
+All these functions are present in `stats/data_to_model.py` and `stats/utils.py`.
 
 ## Parameter estimation techniques
 Using the injected data, we apply the Markov Chain Monte Carlo (MCMC) and Fisher methods to forecast the reconstruction of the posterior distribution for the parameters of the phenomenological models considered.
@@ -29,7 +29,7 @@ The code is implemented to run for the three aforementioned phenomenological mod
 
 The output of both the MCMC and Fisher methods are a fair set of samples from the posterior distributions of the phenomenological parameters.
 
-In particular, in the table stats/sigmas.csv there are the forecast width of the posterior distribution in the direction of the amplitude of the signal, for each of the three phenomenological models considered, assuming flat prior in the parameters (and after marginalizing in the frequency and phase parameters for the DM-inspired model)
+In particular, in the table stats/sigmas.csv there are the forecast width of the posterior distribution in the direction of the amplitude of the signal, for each of the three phenomenological models considered, assuming flat prior in the parameters and after marginalizing in the frequency and phase parameters for the DM-inspired model.
 
 ## Theory Constraints
 The estimated parameters are then used to derive constraints for the proposed physics theories.  The basic signals that are searched for in the data are 1) linear drift, corresponding to dark energy 2) yearly oscillations, corresponding to modified gravity via the Sun-clock interaction and 3) oscillations with arbitrary frequency, corresponding to dark matter, where the oscillation frequency is set by the mass of the dark matter particle.
