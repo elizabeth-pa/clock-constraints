@@ -98,6 +98,11 @@ If desired, one could update the clock names in the various plotting scripts as 
 - GNU Make v4.4+ (optional, used to automate some tasks)
 - All other dependencies are added during the installation process.
 
+# Code reuse
+If you reuse this code, please cite the following:
+- 10.5281/zenodo.15175279
+- arXiv link
+
 # Contact
 
 For more information or to collaborate, please contact:
