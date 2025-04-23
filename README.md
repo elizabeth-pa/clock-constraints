@@ -88,7 +88,7 @@ The plot-generation scripts can also be run individually if desired via e.g.
 ```
 
 # Adding a clock pair
-To add a new clock pair, supply the clocks characterstics in `stats/clocks_parameters.csv`, and list the desired clock combinations to be considered in `stats/clock_pairs.csv`.  Then run `make` from the command line. This creates (or updates) the uncertainties in the `stats/sigma_A_table.csv` table.
+To add a new clock pair, supply the clocks characteristics in `stats/clocks_parameters.csv`, and list the desired clock combinations to be considered in `stats/clock_pairs.csv`.  Then run `make` from the command line. This creates (or updates) the uncertainties in the `stats/sigma_A_table.csv` table.
 These can also be queried
 programatically via an API that is detailed in `mu_constraints.py`.
 If desired, one could update the clock names in the various plotting scripts as well (`plot_DE.py` etc) to see the clock pair's constraints on the included plots.
