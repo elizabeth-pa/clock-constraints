@@ -99,7 +99,7 @@ If desired, one could update the clock names in the various plotting scripts as 
 - All other dependencies are added during the installation process.
 
 # Code reuse
-If you reuse this code, please cite the following:
+If you use this code please cite the following:
 - 10.5281/zenodo.15175279
 - https://arxiv.org/abs/2504.07179
 
