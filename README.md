@@ -100,8 +100,8 @@ If desired, one could update the clock names in the various plotting scripts as 
 
 # Code reuse
 If you use this code please cite the following:
-- 10.5281/zenodo.15175279
-- https://arxiv.org/abs/2504.07179
+- [https://arxiv.org/abs/2504.07179](https://arxiv.org/abs/2504.07179)
+- [10.5281/zenodo.15175279](https://zenodo.org/records/15175279)
 
 # Contact
 
