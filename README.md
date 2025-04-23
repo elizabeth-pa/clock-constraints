@@ -101,7 +101,7 @@ If desired, one could update the clock names in the various plotting scripts as 
 # Code reuse
 If you reuse this code, please cite the following:
 - 10.5281/zenodo.15175279
-- arXiv link
+- https://arxiv.org/abs/2504.07179
 
 # Contact
 
